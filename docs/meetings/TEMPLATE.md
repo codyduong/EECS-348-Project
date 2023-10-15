@@ -1,10 +1,9 @@
 <!-- 
-This is the TEMPLATE for taking meeting notes
-
+DELETE THIS REMINDER (LINES 2-5): This is the TEMPLATE for taking meeting notes
 Some parts are filled out. Note that anything in brackets is a placeholder,
 and should be replaced with described information
 
-REVISION 1
+USING REVISION 1.1
 -->
 
 <!-- 
@@ -17,6 +16,8 @@ This should be in a human readable format. IE. MMM DDD @ HH:MM AM/PM - HH.MM AM/
 EX: Sept 9th (11:00 PM - 11:30 PM)
 -->
 Meeting Date/Time: 
+Foreword: 
+<!-- foreword/special notes is optional -->
 
 ## Topic(s) and Presenter(s):
 - Cody Duong (UPEDU Discussion/Role Assignment/Team Name Ideas)
