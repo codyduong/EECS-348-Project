@@ -5,10 +5,9 @@ This is the repository for the Term Project for KU EECS-348 (Software Engineerin
 ## Project Description
 
 > In this project, you will build a versatile arithmetic expression evaluator using C++. The program
-
-will take an arithmetic expression as input, parse it, and calculate the result according to the order
-of operations (PEMDAS). This project will help you reinforce your understanding of parsing
-techniques, data structures, and algorithm design.
+> will take an arithmetic expression as input, parse it, and calculate the result according to the order
+> of operations (PEMDAS). This project will help you reinforce your understanding of parsing
+> techniques, data structures, and algorithm design.
 
 ## The Team
 
