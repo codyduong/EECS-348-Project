@@ -1,0 +1,41 @@
+name: C++ CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Out Repository
+        uses: actions/checkout@v2
+
+      - name: Cache CMake
+        uses: actions/cache@v2
+        with:
+          path: /usr/local/cmake
+          key: cmake
+          restore-keys: cmake
+
+      - name: Set up CMake
+        run: |
+          if [ ! -f /usr/local/cmake/bin/cmake ]; then
+            sudo apt-get -y install cmake
+          fi
+
+      - name: Build
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build . --config Release
+
+      - name: Run Tests
+        run: ./tests  # Replace with the appropriate command to run your Google Test-based tests
