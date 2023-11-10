@@ -3,7 +3,7 @@ DELETE THIS REMINDER (LINES 2-5): This is the TEMPLATE for taking meeting notes
 Some parts are filled out. Note that anything in brackets is a placeholder,
 and should be replaced with described information
 
-USING REVISION 1.1
+USING REVISION 1.2
 -->
 
 <!-- 
@@ -41,6 +41,8 @@ Typically:
 - [ ] John Foobar
 
 ## Notes
+### From Previous Meeting
+
 <!-- Have a section for each topic of discussion -->
 ### UPEDU
 <!-- Free form notes, include bullet points, paragraphs or best succint takeaways -->

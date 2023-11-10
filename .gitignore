@@ -1,2 +1,4 @@
 ~*.dot
 ~*.docx
+.vscode
+/build
