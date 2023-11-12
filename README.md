@@ -34,8 +34,8 @@ Install through your preferred format, on your preferred operating system
 
 Provided are CLI instructions for building from source:
 - [For Linux/Ubuntu](#linux)
-- [For macOS](#windows)
-- [For Windows](#macos)
+- [For macOS](#macos)
+- [For Windows](#windows)<br></br>
 [File a issue](https://github.com/codyduong/EECS-348-Project/issues) if anything does not work. Also, these are provided as a courtesy examples, and may vary
 greatly dependent on version of OS, et. cetera.
 
