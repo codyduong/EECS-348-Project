@@ -106,4 +106,4 @@ Documentation can be found in [/docs](/docs/). Of note:
   + Each revision is saved as a pdf here in the format `SRSv*.*`
 * [Software Architecture](/docs/software-architecture)
   + The evergreen version is found at [`./Software-Architecture.docx`](/docs/software-architecture/Software-Architecture.docx)
-  + Each revision is saved as a pdf here in the format `SRSv*.*`
+  + Each revision is saved as a pdf here in the format `SADv*.*`
