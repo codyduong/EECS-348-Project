@@ -2,12 +2,15 @@
 #include "ExpressionParser.h"
 
 int main() {
-    std::string expression = "3 + (4 * 2 - 7) / 5 % 3";
-    ExpressionParser parser(expression);
-    std::unique_ptr<ASTNode> ast = parser.parse();
+    std::string expression = "1 +1";
+    //These are valid expressions: "1+1" , "1 +1" but "1 + 1" is not valid the ExpressionParser::parseNumber function does not account for whitespace correctly
+    //eventually add in user input instead of hard coding expression
+    ExpressionParser parser(expression); //creates ExpressionParser class with the givin input expression. The expression is stored as a member variable callded: expression
+    auto ast = parser.parse(); //this creates a variable ast that is a result of the ExpressionParser class
+    double result = ast->evaluate();
     std::cout << "Expression: " << expression << std::endl;
-    std::cout << "Result: " << ast->evaluate() << std::endl;
+    std::cout << "Result: " << result << std::endl;
     std::cout << "AST: " << ast->toString() << std::endl;
-
+    //Add in error handling here try/except block with runtime error
     return 0;
 }

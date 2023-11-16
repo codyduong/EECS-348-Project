@@ -50,7 +50,7 @@ sudo apt-get install libgtest-dev
 Build
 ```bash
 mkdir build
-cmake -s . -b build
+cmake -S . -B build
 make -C build
 ```
 
@@ -70,7 +70,7 @@ brew install gtest
 Build
 ```bash
 mkdir build
-cmake -s. -b build
+cmake -S. -B build
 make -C build
 ```
 

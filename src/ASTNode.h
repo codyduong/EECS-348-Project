@@ -1,42 +1,35 @@
-#ifndef ASTNODE_H
-#define ASTNODE_H
+// ASTNode.h
+#pragma once
 
-#include <memory>
 #include <string>
+#include <memory>
+#include <stdexcept>
 
 // Abstract base class for AST nodes.
-class ASTNode {
-public:
-    // Evaluate the AST node.
+struct ASTNode {
+        // Evaluate the AST node.
+    virtual ~ASTNode() = default;
     virtual double evaluate() const = 0;
 
     // Convert the AST node to a string for debugging.
     virtual std::string toString() const = 0;
 };
 
-// Node for representing numeric values.
-class NumberNode : public ASTNode {
-public:
-    NumberNode(double value);
-    double evaluate() const override;
-    std::string toString() const override;
-
-private:
-    double value;
-};
-
 // Node for binary operations (e.g., +, -, *, /, %). 
 // Consists of a left value, an operator (op) and right value.
-class BinaryOperationNode : public ASTNode {
-public:
-    BinaryOperationNode(char op, std::unique_ptr<ASTNode> left, std::unique_ptr<ASTNode> right);
-    double evaluate() const override;
-    std::string toString() const override;
-
-private:
+struct BinaryOpNode : public ASTNode {
     char op;
     std::unique_ptr<ASTNode> left;
     std::unique_ptr<ASTNode> right;
+    BinaryOpNode(char op, std::unique_ptr<ASTNode> left, std::unique_ptr<ASTNode> right);
+    double evaluate() const override;
+    std::string toString() const override;
 };
 
-#endif
+// Node for representing numeric values.
+struct NumberNode : public ASTNode {
+    double value;
+    explicit NumberNode(double value);
+    double evaluate() const override;
+    std::string toString() const override;
+};

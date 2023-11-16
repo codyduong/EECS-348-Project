@@ -1,22 +1,21 @@
-#ifndef EXPRESSIONPARSER_H
-#define EXPRESSIONPARSER_H
+// ExpressionParser.h
+#pragma once
 
-#include <string>
 #include <memory>
+#include <stdexcept>
 #include "ASTNode.h"
 
 // ExpressionParser class for parsing algebraic expressions.
 class ExpressionParser {
-public:
-    ExpressionParser(const std::string& expression);
-    std::unique_ptr<ASTNode> parse();
-    
 private:
-    std::string expression;
+    const std::string& expression;
     size_t pos;
-
-    // Get the next token from the input expression.
     char getNextToken();
-};
+    std::unique_ptr<ASTNode> parseNumber();
+    std::unique_ptr<ASTNode> parseTerm();
+    std::unique_ptr<ASTNode> parseFactor();
 
-#endif
+public:
+    explicit ExpressionParser(const std::string& expression);
+    std::unique_ptr<ASTNode> parse();
+};
