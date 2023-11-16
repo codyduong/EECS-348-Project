@@ -33,10 +33,7 @@ jobs:
       - name: Build
         run: |
           mkdir build
-          cd build
-          cmake ..
-          cmake --build .
-          make -C build .
+          cmake -S . -B build && make -C build
 
       - name: Run Tests
-        run: ./tests
+        run: ./build/tests
