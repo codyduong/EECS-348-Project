@@ -13,28 +13,27 @@ file(GLOB HEADERS "src/*.h")
 
 add_executable(expression_parser ${SOURCES} ${HEADERS})
 
+# Remove main.cpp for test runners
+list(REMOVE_ITEM SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
+
 # Configure Test Executable
 file(GLOB TSOURCES "tests/*.cpp")
 file(GLOB THEADERS "tests/*.h")
 
 # https://google.github.io/googletest/quickstart-cmake.html
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
 
-# this is not working, just install manually
-# include(FetchContent)
-# FetchContent_Declare(
-#   googletest
-#   # Specify the commit you depend on and update it regularly.
-#   URL https://github.com/google/googletest/archive/5376968f6948923e2411081fd9372e71a59d8e77.zip
-# )
-# # For Windows: Prevent overriding the parent project's compiler/linker settings
-# set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-# FetchContent_MakeAvailable(googletest)
+enable_testing()
 
+add_executable(tests ${TSOURCES} ${SOURCES})
+target_link_libraries(tests GTest::gtest_main)
 
-# find_package(GTest REQUIRED)
-
-# # add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
-
-# # Now simply link against gtest or gtest_main as needed. Eg
-# add_executable(tests ${TSOURCES} ${THEADERS} ${SOURCES} ${HEADERS})
-# target_link_libraries(tests GTest::GTest GTest::Main)
+include(GoogleTest)
+gtest_discover_tests(tests)

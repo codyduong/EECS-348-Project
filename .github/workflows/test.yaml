@@ -3,10 +3,10 @@ name: C++ CI
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -35,7 +35,8 @@ jobs:
           mkdir build
           cd build
           cmake ..
-          cmake --build . --config Release
+          cmake --build .
+          make -C build .
 
       - name: Run Tests
-        run: ./tests  # Replace with the appropriate command to run your Google Test-based tests
+        run: ./tests

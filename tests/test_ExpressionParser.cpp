@@ -1,14 +1,26 @@
 #include "gtest/gtest.h"
-#include "ExpressionParser.h"
+#include "../src/ExpressionParser.h"
 
-TEST(ExpressionParser, BasicExpressions) {
-    // @codyduong Re-enable once parse is implemented
-    // ExpressionParser parser("3 + 2");
-    // std::unique_ptr<ASTNode> ast = parser.parse();
-    // EXPECT_EQ(ast->evaluate(), 5);
+TEST(ExpressionParserAddition, BasicAddition) {
+    ExpressionParser parser("1+1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 2);
 }
 
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+TEST(ExpressionParserAddition, BasicAdditionWithWhitespace1) {
+    ExpressionParser parser("1 +1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 2);
+}
+
+TEST(ExpressionParserAddition, BasicAdditionWithWhitespace2) {
+    ExpressionParser parser("1+ 1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 2);
+}
+
+TEST(ExpressionParserAddition, BasicAdditionWithWhitespace3) {
+    ExpressionParser parser("1 + 1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 2);
 }

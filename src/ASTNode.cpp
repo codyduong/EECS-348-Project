@@ -1,10 +1,10 @@
 // ASTNode.cpp
 #include "ASTNode.h"
 
-BinaryOpNode::BinaryOpNode(char op, std::unique_ptr<ASTNode> left, std::unique_ptr<ASTNode> right)
+BinaryOperationNode::BinaryOperationNode(char op, std::unique_ptr<ASTNode> left, std::unique_ptr<ASTNode> right)
     : op(op), left(std::move(left)), right(std::move(right)) {}
 
-double BinaryOpNode::evaluate() const {
+double BinaryOperationNode::evaluate() const {
     double leftVal = left->evaluate();
     double rightVal = right->evaluate();
     switch (op) {
@@ -25,6 +25,6 @@ std::string NumberNode::toString() const {
     return std::to_string(value);
 }
 
-std::string BinaryOpNode::toString() const {
+std::string BinaryOperationNode::toString() const {
     return "(" + left->toString() + " " + op + " " + right->toString() + ")";
 }

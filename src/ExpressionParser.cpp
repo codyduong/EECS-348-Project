@@ -33,13 +33,13 @@ std::unique_ptr<ASTNode> ExpressionParser::parseTerm() {
     auto left = parseNumber();
     while (true) {
         char op = getNextToken();
-        if (op != '*' && op != '/') {
-            pos--;  // Put back the token if it's not a '*' or '/'
+        if (op != '+' && op != '-') {
+            pos--;  // Put back the token if it's not a '+' or '-'
             break;
         }
         //auto right = parseFactor();
         auto right = parseNumber();
-        left = std::make_unique<BinaryOpNode>(op, std::move(left), std::move(right));
+        left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
         }
     return left;
     }

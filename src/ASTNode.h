@@ -6,8 +6,9 @@
 #include <stdexcept>
 
 // Abstract base class for AST nodes.
-struct ASTNode {
-        // Evaluate the AST node.
+class ASTNode {
+public:
+    // Evaluate the AST node.
     virtual ~ASTNode() = default;
     virtual double evaluate() const = 0;
 
@@ -17,19 +18,24 @@ struct ASTNode {
 
 // Node for binary operations (e.g., +, -, *, /, %). 
 // Consists of a left value, an operator (op) and right value.
-struct BinaryOpNode : public ASTNode {
+class BinaryOperationNode : public ASTNode {
+public:
+    BinaryOperationNode(char op, std::unique_ptr<ASTNode> left, std::unique_ptr<ASTNode> right);
+    double evaluate() const override;
+    std::string toString() const override;
+private:
     char op;
     std::unique_ptr<ASTNode> left;
     std::unique_ptr<ASTNode> right;
-    BinaryOpNode(char op, std::unique_ptr<ASTNode> left, std::unique_ptr<ASTNode> right);
-    double evaluate() const override;
-    std::string toString() const override;
 };
 
 // Node for representing numeric values.
-struct NumberNode : public ASTNode {
-    double value;
+class NumberNode : public ASTNode {
+public:
     explicit NumberNode(double value);
     double evaluate() const override;
     std::string toString() const override;
+
+private:
+    double value;
 };

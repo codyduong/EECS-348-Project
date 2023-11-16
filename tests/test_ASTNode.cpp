@@ -1,6 +1,5 @@
-// tests/test_ASTNode.cpp
 #include <gtest/gtest.h>
-#include "ASTNode.h"
+#include "../src/ASTNode.h"
 
 // Test NumberNode
 TEST(NumberNodeTest, Evaluate) {
@@ -13,22 +12,53 @@ TEST(NumberNodeTest, ToString) {
     EXPECT_EQ(numNode.toString(), "42.000000");
 }
 
-// Test BinaryOperationNode
-TEST(BinaryOperationNodeTest, AdditionEvaluate) {
+// Test BinaryOperationNode Addition
+TEST(BinaryOperationNodeAddition, AdditionEvaluate) {
     NumberNode left(20.0);
     NumberNode right(22.0);
-    BinaryOperationNode evaluate('+', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
-    EXPECT_DOUBLE_EQ(addNode.evaluate(), 42.0);
+    BinaryOperationNode node('+', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 42.0);
 }
 
-TEST(BinaryOperationNodeTest, AdditionToString) {
+TEST(BinaryOperationNodeAddition, AdditionEvaluateDecimal) {
+    NumberNode left(5.5);
+    NumberNode right(7.33);
+    BinaryOperationNode node('+', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 12.83);
+}
+
+TEST(BinaryOperationNodeAddition, AdditionNegative1) {
+    NumberNode left(20.0);
+    NumberNode right(-22.0);
+    BinaryOperationNode node('+', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), -2);
+}
+
+TEST(BinaryOperationNodeAddition, AdditionNegative2) {
+    NumberNode left(-20.0);
+    NumberNode right(22.0);
+    BinaryOperationNode node('+', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 2);
+}
+
+TEST(BinaryOperationNodeAddition, AdditionNegative3) {
+    NumberNode left(-20.0);
+    NumberNode right(-22.0);
+    BinaryOperationNode node('+', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), -42);
+}
+
+TEST(BinaryOperationNodeAddition, AdditionToString) {
     NumberNode left(20.0);
     NumberNode right(22.0);
-    BinaryOperationNode evaluate('+', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
-    EXPECT_EQ(addNode.toString(), "(20.000000 + 22.000000)");
+    BinaryOperationNode node('+', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_EQ(node.toString(), "(20.000000 + 22.000000)");
 }
 
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
+// Test BinaryOperationNode Subtraction
+
+// Test BinaryOperationNode Multiplication
+
+// Test BinaryOperationNode Division
+
+// Test BinaryOperationNode Modulo
