@@ -9,11 +9,28 @@ double BinaryOperationNode::evaluate() const {
     double rightVal = right->evaluate();
     switch (op) {
         case '+': return leftVal + rightVal;
-        //add in cases for the other operators
-        //add in error handling for operations like division cannot divide by zero
+        case '-': return leftVal - rightVal;
+        case '*': return leftVal * rightVal;
+        case '/':
+        if (rightVal != 0.0) {
+                return leftVal / rightVal;
+            } else {
+                throw std::runtime_error("Division by zero");
+            }
+        case '%':
+            if (rightVal != 0.0) {
+                return std::fmod(leftVal, rightVal);
+            } else {
+                throw std::runtime_error("Modulus by zero");
+            }
+        case '^': return std::pow(leftVal, rightVal);
+        
         default: throw std::runtime_error("Invalid operator");
     }
 }
+  
+    
+
 
 NumberNode::NumberNode(double value) : value(value) {}
 
