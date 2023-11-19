@@ -1,4 +1,3 @@
-// ExpressionParser.cpp
 #include "ExpressionParser.h"
 #include <cctype>
 #include <cmath>
@@ -33,10 +32,8 @@ std::unique_ptr<ASTNode> ExpressionParser::parseFactor() {
 
     if (currentToken == '(') {
         auto expressionInsideParentheses = parseExpression();
-        // Ensure the next token is the closing parenthesis
         if (getNextToken() != ')') {
-            // Handle error: Missing closing parenthesis
-            // You can throw an exception or return an error node here
+            throw std::runtime_error("Missing closing parenthesis");
         }
         return expressionInsideParentheses;
     } else {
