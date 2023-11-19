@@ -1,7 +1,7 @@
 // ExpressionParser.cpp
 #include "ExpressionParser.h"
 #include <cctype>
-#include <cmath> 
+#include <cmath>
 
 ExpressionParser::ExpressionParser(const std::string& expression) : expression(expression), pos(0) {}
 
@@ -21,7 +21,7 @@ std::unique_ptr<ASTNode> ExpressionParser::createBinaryOperationNode(char op, st
 
 std::unique_ptr<ASTNode> ExpressionParser::parseNumber() {
     size_t startPos = pos;
-    while (pos < expression.size() && (std::isdigit(expression[pos]) || expression[pos] == '.')) {
+    while (pos < expression.size() && (std::isdigit(expression[pos]) || expression[pos] == '.' || expression[pos] == '-' || expression[pos] == '+')) {
         ++pos;
     }
     std::string numStr = expression.substr(startPos, pos - startPos);
