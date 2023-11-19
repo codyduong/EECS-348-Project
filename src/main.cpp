@@ -4,12 +4,12 @@
 int main() {
     std::cout << "Enter an algebraic expression: ";
     std::string inputExpression;
-    std::getline(std::cin, input expression);
+    std::getline(std::cin, inputExpression);
 
     try {
-        ExpressionParser parser(input expression);
+        ExpressionParser parser(inputExpression);
         std::unique_ptr<ASTNode> result = parser.parse();
-        double evaluation result = result->evaluate();
+        double evaluationResult = result->evaluate();
 
         std::cout << "Expression: " << inputExpression << std::endl;
         std::cout << "Result: " << evaluationResult << std::endl;
