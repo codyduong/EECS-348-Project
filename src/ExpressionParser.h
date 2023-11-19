@@ -8,7 +8,7 @@
 // ExpressionParser class for parsing algebraic expressions.
 class ExpressionParser {
 private:
-    const std::string& expression;
+    const std::string expression;  // Changed from reference to object
     size_t pos;
     char getNextToken();
     std::unique_ptr<ASTNode> parseNumber();
@@ -20,3 +20,4 @@ public:
     explicit ExpressionParser(const std::string& expression);
     std::unique_ptr<ASTNode> parse();
 };
+
