@@ -51,6 +51,10 @@ std::unique_ptr<ASTNode> ExpressionParser::parseTerm() {
             pos--; // Put back the token if it's not one of the recognized operators
             break;
         }
+
+        // Add this debugging statement
+        std::cout << "Operator: " << op << std::endl;
+
         auto right = parseFactor();
         switch (op) {
             case '*':
@@ -63,6 +67,7 @@ std::unique_ptr<ASTNode> ExpressionParser::parseTerm() {
     }
     return left;
 }
+
 
 std::unique_ptr<ASTNode> ExpressionParser::parseExpression() {
     auto left = parseTerm();
