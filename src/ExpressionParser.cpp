@@ -45,24 +45,25 @@ std::cout << "Current Token in parseTerm: " << op << std::endl;
 
 std::unique_ptr<ASTNode> ExpressionParser::parseTerm() {
     auto left = parseFactor();
-
     while (true) {
         char op = getNextToken();
         if (op != '*' && op != '/' && op != '%' && op != '^') {
-            pos--; // Put back the token if it's not one of the recognized operators
+            pos--;  // Put back the token if it's not one of the recognized operators
             break;
         }
-
-        // Add this debugging statement
-        std::cout << "ASCII value of Current Token in parseTerm: " << static_cast<int>(op) << std::endl;
-
         auto right = parseFactor();
         switch (op) {
             case '*':
+                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
+                break;
             case '/':
+                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
+                break;
             case '%':
+                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
+                break;
             case '^':
-                left = createBinaryOperationNode(op, std::move(left), std::move(right));
+                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
                 break;
         }
     }
