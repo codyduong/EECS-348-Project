@@ -41,6 +41,7 @@ std::unique_ptr<ASTNode> ExpressionParser::parseFactor() {
         return parseNumber();
     }
 }
+std::cout << "Current Token in parseTerm: " << op << std::endl;
 
 std::unique_ptr<ASTNode> ExpressionParser::parseTerm() {
     auto left = parseFactor();
