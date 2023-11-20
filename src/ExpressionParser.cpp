@@ -54,7 +54,7 @@ std::unique_ptr<ASTNode> ExpressionParser::parseTerm() {
         }
 
         // Add this debugging statement
-        std::cout << "Operator: " << op << std::endl;
+        std::cout << "ASCII value of Current Token in parseTerm: " << static_cast<int>(op) << std::endl;
 
         auto right = parseFactor();
         switch (op) {
