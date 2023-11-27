@@ -2,10 +2,11 @@
 
 #include <memory>
 #include <stdexcept>
+
 #include "ASTNode.h"
 
 class ExpressionParser {
-private:
+   private:
     const std::string expression;
     size_t pos;
     char getNextToken();
@@ -14,7 +15,7 @@ private:
     std::unique_ptr<ASTNode> parseFactor();
     std::unique_ptr<ASTNode> parseExpression();
 
-public:
+   public:
     explicit ExpressionParser(const std::string& expression);
     std::unique_ptr<ASTNode> parse();
 };

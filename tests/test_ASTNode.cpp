@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include "../src/ASTNode.h"
 
 // Test NumberNode

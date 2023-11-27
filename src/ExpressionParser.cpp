@@ -1,9 +1,9 @@
 #include "ExpressionParser.h"
+
 #include <cctype>
 #include <cmath>
 
-ExpressionParser::ExpressionParser(const std::string& expression)
-    : expression(expression), pos(0) {}
+ExpressionParser::ExpressionParser(const std::string& expression) : expression(expression), pos(0) {}
 
 char ExpressionParser::getNextToken() {
     while (pos < expression.size() && std::isspace(expression[pos])) {
@@ -37,8 +37,7 @@ std::unique_ptr<ASTNode> ExpressionParser::parseFactor() {
         // Handle unary minus
         auto factor = parseFactor();
         // We don't have UnaryNodes, but -1 * the factor is equivalent.
-        return std::make_unique<BinaryOperationNode>('*', std::make_unique<NumberNode>(-1),
-                                                     std::move(factor));
+        return std::make_unique<BinaryOperationNode>('*', std::make_unique<NumberNode>(-1), std::move(factor));
     } else {
         pos--;  // Put back the token if it's not an opening parenthesis
         return parseNumber();

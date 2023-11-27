@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
 #include "../src/ExpressionParser.h"
+#include "gtest/gtest.h"
 
 /**
  * Special Cases
@@ -74,5 +74,5 @@ TEST(ExpressionParserAddition, PositiveAddNegative) {
 }
 
 /**
- * Full Expressions 
+ * Full Expressions
  */
