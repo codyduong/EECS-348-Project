@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB SOURCES "src/*.cpp")
 file(GLOB HEADERS "src/*.h")
 
-add_executable(expression_parser ${SOURCES} ${HEADERS})
+add_executable(expression_parser ${SOURCES} src/version.hpp ${HEADERS})
 
 # Remove main.cpp for test runners
 list(REMOVE_ITEM SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
