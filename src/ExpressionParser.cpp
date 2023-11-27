@@ -1,6 +1,6 @@
 #include "ExpressionParser.h"
 #include <cctype>
-#include <cmath>
+#include <cmath> 
 
 ExpressionParser::ExpressionParser(const std::string& expression) : expression(expression), pos(0) {}
 
