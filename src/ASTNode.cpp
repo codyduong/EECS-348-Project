@@ -1,5 +1,6 @@
 // ASTNode.cpp
 #include "ASTNode.h"
+#include <cmath>
 
 BinaryOperationNode::BinaryOperationNode(char op, std::unique_ptr<ASTNode> left, std::unique_ptr<ASTNode> right)
     : op(op), left(std::move(left)), right(std::move(right)) {}
