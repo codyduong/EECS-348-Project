@@ -50,8 +50,7 @@ sudo apt-get install libgtest-dev
 Build
 ```bash
 mkdir build
-cmake -s . -b build
-make -C build
+cmake -S . -B build && make -C build
 ```
 
 Run
@@ -70,8 +69,7 @@ brew install gtest
 Build
 ```bash
 mkdir build
-cmake -s. -b build
-make -C build
+cmake -S. -B build && make -C build
 ```
 
 Run
@@ -102,8 +100,8 @@ Documentation can be found in [/docs](/docs/). Of note:
   + The evergreen version is found at [`./Software Development Plan.docx`](/docs/project-plan/Software%20Development%20Plan.docx)
   + Each revision is saved as a pdf here in the format `SDPv*.*`
 * [Software Requirements](/docs/software-requirements-spec/)
-  + The evergreen version is found at ['./Software-Requirements-Spec.docx](/docs/software-requirements-spec/Software-Requirements-Spec.docx)
+  + The evergreen version is found at [`./Software-Requirements-Spec.docx`](/docs/software-requirements-spec/Software-Requirements-Spec.docx)
   + Each revision is saved as a pdf here in the format `SRSv*.*`
 * [Software Architecture](/docs/software-architecture)
-  + The evergreen version is found at ['./Software-Architecture.docx](/docs/software-architecture/Software-Requirements.docx)
-  + Each revision is saved as a pdf here in the format `SRSv*.*`
+  + The evergreen version is found at [`./Software-Architecture.docx`](/docs/software-architecture/Software-Architecture.docx)
+  + Each revision is saved as a pdf here in the format `SADv*.*`

@@ -1,0 +1,39 @@
+name: C++ CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Out Repository
+        uses: actions/checkout@v2
+
+      - name: Cache CMake
+        uses: actions/cache@v2
+        with:
+          path: /usr/local/cmake
+          key: cmake
+          restore-keys: cmake
+
+      - name: Set up CMake
+        run: |
+          if [ ! -f /usr/local/cmake/bin/cmake ]; then
+            sudo apt-get -y install cmake
+          fi
+
+      - name: Build
+        run: |
+          mkdir build
+          cmake -S . -B build && make -C build
+
+      - name: Run Tests
+        run: ./build/tests
