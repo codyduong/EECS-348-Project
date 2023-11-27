@@ -1,11 +1,10 @@
-// ExpressionParser.cpp
 #include "ExpressionParser.h"
+
 #include <cctype>
-#include <cmath> 
+#include <cmath>
 
 ExpressionParser::ExpressionParser(const std::string& expression) : expression(expression), pos(0) {}
 
-//call this after the parser gets to the left number of the AST to get the operator
 char ExpressionParser::getNextToken() {
     while (pos < expression.size() && std::isspace(expression[pos])) {
         ++pos;  // Skip whitespaces
@@ -14,42 +13,35 @@ char ExpressionParser::getNextToken() {
         return '\0';  // End of expression
     }
     return expression[pos++];
-    }
+}
 
-std::unique_ptr<ASTNode> ExpressionParser::parseNumber()  {
+std::unique_ptr<ASTNode> ExpressionParser::parseNumber() {
     size_t startPos = pos;
-    while (pos < expression.size() && (std::isdigit(expression[pos]) || expression[pos] == '.')) { //this while statement might be able to be simplified
+    while (pos < expression.size() && (std::isdigit(expression[pos]) || expression[pos] == '.')) {
         ++pos;
     }
     std::string numStr = expression.substr(startPos, pos - startPos);
     return std::make_unique<NumberNode>(std::stod(numStr));
-    }
+}
 
 std::unique_ptr<ASTNode> ExpressionParser::parseFactor() {
-    auto left = parseNumber();
-    while (true) {
-        char op = getNextToken();
-        if (op != '*' && op != '/' && op != '%' && op != '^') {
-            pos--;  // Put back the token if it's not one of the recognized operators
-            break;
+    char currentToken = getNextToken();
+
+    if (currentToken == '(') {
+        auto expressionInsideParentheses = parseExpression();
+        if (getNextToken() != ')') {
+            throw std::runtime_error("Missing closing parenthesis");
         }
-        auto right = parseNumber();
-        switch (op) {
-            case '*':
-                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
-                break;
-            case '/':
-                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
-                break;
-            case '%':
-                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
-                break;
-            case '^':
-                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
-                break;
-        }
+        return expressionInsideParentheses;
+    } else if (currentToken == '-') {
+        // Handle unary minus
+        auto factor = parseFactor();
+        // We don't have UnaryNodes, but -1 * the factor is equivalent.
+        return std::make_unique<BinaryOperationNode>('*', std::make_unique<NumberNode>(-1), std::move(factor));
+    } else {
+        pos--;  // Put back the token if it's not an opening parenthesis
+        return parseNumber();
     }
-    return left;
 }
 
 std::unique_ptr<ASTNode> ExpressionParser::parseTerm() {
@@ -61,20 +53,7 @@ std::unique_ptr<ASTNode> ExpressionParser::parseTerm() {
             break;
         }
         auto right = parseFactor();
-        switch (op) {
-            case '*':
-                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
-                break;
-            case '/':
-                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
-                break;
-            case '%':
-                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
-                break;
-            case '^':
-                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
-                break;
-        }
+        left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
     }
     return left;
 }
@@ -93,6 +72,4 @@ std::unique_ptr<ASTNode> ExpressionParser::parseExpression() {
     return left;
 }
 
-std::unique_ptr<ASTNode> ExpressionParser::parse() {
-    return parseExpression();
-}
+std::unique_ptr<ASTNode> ExpressionParser::parse() { return parseExpression(); }
