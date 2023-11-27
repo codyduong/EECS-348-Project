@@ -14,10 +14,6 @@ char ExpressionParser::getNextToken() {
     return expression[pos++];
 }
 
-std::unique_ptr<ASTNode> ExpressionParser::createBinaryOperationNode(char op, std::unique_ptr<ASTNode> left, std::unique_ptr<ASTNode> right) {
-    return std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
-}
-
 std::unique_ptr<ASTNode> ExpressionParser::parseNumber() {
     size_t startPos = pos;
     while (pos < expression.size() && (std::isdigit(expression[pos]) || expression[pos] == '.' || expression[pos] == '-' || expression[pos] == '+')) {
@@ -41,7 +37,6 @@ std::unique_ptr<ASTNode> ExpressionParser::parseFactor() {
         return parseNumber();
     }
 }
-std::cout << "Current Token in parseTerm: " << op << std::endl;
 
 std::unique_ptr<ASTNode> ExpressionParser::parseTerm() {
     auto left = parseFactor();
@@ -81,7 +76,7 @@ std::unique_ptr<ASTNode> ExpressionParser::parseExpression() {
             break;
         }
         auto right = parseTerm();
-        left = createBinaryOperationNode(op, std::move(left), std::move(right));
+        left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
     }
     return left;
 }

@@ -13,7 +13,6 @@ private:
     std::unique_ptr<ASTNode> parseTerm();
     std::unique_ptr<ASTNode> parseFactor();
     std::unique_ptr<ASTNode> parseExpression();
-    std::unique_ptr<ASTNode> createBinaryOperationNode(char op, std::unique_ptr<ASTNode> left, std::unique_ptr<ASTNode> right);
 
 public:
     explicit ExpressionParser(const std::string& expression);
