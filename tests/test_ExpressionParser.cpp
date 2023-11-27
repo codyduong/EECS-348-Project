@@ -1,26 +1,78 @@
 #include "gtest/gtest.h"
 #include "../src/ExpressionParser.h"
 
-TEST(ExpressionParserAddition, BasicAddition) {
+/**
+ * Special Cases
+ */
+TEST(ExpressionParserSpecial, UnaryNegative) {
+    ExpressionParser parser("-1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), -1);
+}
+
+/**
+ * Addition
+ */
+TEST(ExpressionParserAddition, NoWhitespace) {
     ExpressionParser parser("1+1");
     std::unique_ptr<ASTNode> ast = parser.parse();
     EXPECT_EQ(ast->evaluate(), 2);
 }
 
-TEST(ExpressionParserAddition, BasicAdditionWithWhitespace1) {
+TEST(ExpressionParserAddition, OperatorLeadingWhitespace) {
     ExpressionParser parser("1 +1");
     std::unique_ptr<ASTNode> ast = parser.parse();
     EXPECT_EQ(ast->evaluate(), 2);
 }
 
-TEST(ExpressionParserAddition, BasicAdditionWithWhitespace2) {
+TEST(ExpressionParserAddition, OperatorTrailingWhitespace) {
     ExpressionParser parser("1+ 1");
     std::unique_ptr<ASTNode> ast = parser.parse();
     EXPECT_EQ(ast->evaluate(), 2);
 }
 
-TEST(ExpressionParserAddition, BasicAdditionWithWhitespace3) {
+TEST(ExpressionParserAddition, OperatorLeadingAndTrailingWhitespace) {
     ExpressionParser parser("1 + 1");
     std::unique_ptr<ASTNode> ast = parser.parse();
     EXPECT_EQ(ast->evaluate(), 2);
 }
+
+TEST(ExpressionParserAddition, LeadingWhitespace) {
+    ExpressionParser parser(" 1+1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 2);
+}
+
+TEST(ExpressionParserAddition, TrailingWhitespace) {
+    ExpressionParser parser("1+1 ");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 2);
+}
+
+TEST(ExpressionParserAddition, OperatorLeadingAndTrailingWhitespaceAndExpressionLeadingAndTrailingWhitespace) {
+    ExpressionParser parser(" 1 + 1 ");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 2);
+}
+
+TEST(ExpressionParserAddition, NegativeAddNegative) {
+    ExpressionParser parser("-1+-1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), -2);
+}
+
+TEST(ExpressionParserAddition, NegativeAddPositive) {
+    ExpressionParser parser("-1+5");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 4);
+}
+
+TEST(ExpressionParserAddition, PositiveAddNegative) {
+    ExpressionParser parser("1+-4");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), -3);
+}
+
+/**
+ * Full Expressions 
+ */

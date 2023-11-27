@@ -1,8 +1,9 @@
 #include "ExpressionParser.h"
 #include <cctype>
-#include <cmath> 
+#include <cmath>
 
-ExpressionParser::ExpressionParser(const std::string& expression) : expression(expression), pos(0) {}
+ExpressionParser::ExpressionParser(const std::string& expression)
+    : expression(expression), pos(0) {}
 
 char ExpressionParser::getNextToken() {
     while (pos < expression.size() && std::isspace(expression[pos])) {
@@ -16,7 +17,7 @@ char ExpressionParser::getNextToken() {
 
 std::unique_ptr<ASTNode> ExpressionParser::parseNumber() {
     size_t startPos = pos;
-    while (pos < expression.size() && (std::isdigit(expression[pos]) || expression[pos] == '.' || expression[pos] == '-' || expression[pos] == '+')) {
+    while (pos < expression.size() && (std::isdigit(expression[pos]) || expression[pos] == '.')) {
         ++pos;
     }
     std::string numStr = expression.substr(startPos, pos - startPos);
@@ -32,8 +33,14 @@ std::unique_ptr<ASTNode> ExpressionParser::parseFactor() {
             throw std::runtime_error("Missing closing parenthesis");
         }
         return expressionInsideParentheses;
+    } else if (currentToken == '-') {
+        // Handle unary minus
+        auto factor = parseFactor();
+        // We don't have UnaryNodes, but -1 * the factor is equivalent.
+        return std::make_unique<BinaryOperationNode>('*', std::make_unique<NumberNode>(-1),
+                                                     std::move(factor));
     } else {
-        pos--; // Put back the token if it's not an opening parenthesis
+        pos--;  // Put back the token if it's not an opening parenthesis
         return parseNumber();
     }
 }
@@ -47,32 +54,17 @@ std::unique_ptr<ASTNode> ExpressionParser::parseTerm() {
             break;
         }
         auto right = parseFactor();
-        switch (op) {
-            case '*':
-                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
-                break;
-            case '/':
-                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
-                break;
-            case '%':
-                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
-                break;
-            case '^':
-                left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
-                break;
-        }
+        left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
     }
     return left;
 }
-
-
 
 std::unique_ptr<ASTNode> ExpressionParser::parseExpression() {
     auto left = parseTerm();
     while (true) {
         char op = getNextToken();
         if (op != '+' && op != '-') {
-            pos--; // Put back the token if it's not a '+' or '-'
+            pos--;  // Put back the token if it's not a '+' or '-'
             break;
         }
         auto right = parseTerm();
@@ -81,6 +73,4 @@ std::unique_ptr<ASTNode> ExpressionParser::parseExpression() {
     return left;
 }
 
-std::unique_ptr<ASTNode> ExpressionParser::parse() {
-    return parseExpression();
-}
+std::unique_ptr<ASTNode> ExpressionParser::parse() { return parseExpression(); }
