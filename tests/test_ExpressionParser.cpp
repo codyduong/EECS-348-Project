@@ -73,6 +73,29 @@ TEST(ExpressionParserAddition, PositiveAddNegative) {
     EXPECT_EQ(ast->evaluate(), -3);
 }
 
+// Failures
+TEST(ExprsesionParserAdditon, DuplicateAddOperator) {
+    ExpressionParser parser("1++1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_THROW(ast->evaluate(), std::runtime_error);
+}
+
+/**
+ * Subtraction
+ */
+
+/**
+ * Multiplication
+ */
+
+/**
+ * Exponentiation
+ */
+
+/**
+ * Modulus
+ */
+
 /**
  * Full Expressions
  */
