@@ -206,3 +206,66 @@ TEST(ExprsesionParserMultiplication, DuplicateMultiplyOperator) {
     std::unique_ptr<ASTNode> ast = parser.parse();
     EXPECT_THROW(ast->evaluate(), std::runtime_error);
 }
+/**
+ * Exponentiation
+ */
+TEST(ExpressionParserExponentiation, PositiveExponentPositive) {
+    ExpressionParser parser("2^3");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 8);
+}
+
+TEST(ExpressionParserExponentiation, NegativeBasePositiveExponent) {
+    ExpressionParser parser("-2^2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 4);
+}
+
+TEST(ExpressionParserExponentiation, PositiveBaseNegativeExponent) {
+    ExpressionParser parser("3^(-2)");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_DOUBLE_EQ(ast->evaluate(), 1.0 / 9.0);
+}
+
+TEST(ExpressionParserExponentiation, BaseWithWhitespaceExponent) {
+    ExpressionParser parser("2 ^ 4");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 16);
+}
+
+TEST(ExpressionParserExponentiation, ExponentiationWithMultipleOperators) {
+    ExpressionParser parser("2 + 3^2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 11);
+}
+
+TEST(ExpressionParserExponentiation, ExponentiationWithParentheses) {
+    ExpressionParser parser("(2 + 3)^2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 25);
+}
+
+TEST(ExpressionParserExponentiation, ExponentiationWithNegativeBaseAndExponent) {
+    ExpressionParser parser("(-2)^(-3)");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_DOUBLE_EQ(ast->evaluate(), -0.125);
+}
+
+TEST(ExpressionParserExponentiation, ExponentiationWithNegativeBase) {
+    ExpressionParser parser("(-2)^3");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), -8);
+}
+
+TEST(ExpressionParserExponentiation, ExponentiationWithZeroBase) {
+    ExpressionParser parser("0^2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 0);
+}
+
+TEST(ExpressionParserExponentiation, ExponentiationWithZeroExponent) {
+    ExpressionParser parser("3^0");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 1);
+}
+
