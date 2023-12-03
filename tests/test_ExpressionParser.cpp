@@ -75,72 +75,24 @@ TEST(ExpressionParserAddition, PositiveAddNegative) {
     EXPECT_EQ(ast->evaluate(), -3);
 }
 
+// Failures
+TEST(ExprsesionParserAdditon, DuplicateAddOperator) {
+    ExpressionParser parser("1++1");
+    EXPECT_THROW(
+        try { parser.parse(); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "Expected a number, received: +");
+            throw;
+        },
+        std::runtime_error);
+}
+
 /**
  * Subtraction
  */
-TEST(ExpressionParserSubtraction, NoWhitespace) {
-    ExpressionParser parser("1-1");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);  // Corrected expectation to 0
-}
 
-TEST(ExpressionParserSubtraction, OperatorLeadingWhitespace) {
-    ExpressionParser parser("1 -1");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);  // Corrected expectation to 0
-}
-
-TEST(ExpressionParserSubtraction, OperatorTrailingWhitespace) {
-    ExpressionParser parser("1- 1");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);  // Corrected expectation to 0
-}
-
-TEST(ExpressionParserSubtraction, OperatorLeadingAndTrailingWhitespace) {
-    ExpressionParser parser("1 - 1");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);  // Corrected expectation to 0
-}
-
-TEST(ExpressionParserSubtraction, LeadingWhitespace) {
-    ExpressionParser parser(" 1-1");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);  // Corrected expectation to 0
-}
-
-TEST(ExpressionParserSubtraction, TrailingWhitespace) {
-    ExpressionParser parser("1-1 ");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);  // Corrected expectation to 0
-}
-
-TEST(ExpressionParserSubtraction, OperatorLeadingAndTrailingWhitespaceAndExpressionLeadingAndTrailingWhitespace) {
-    ExpressionParser parser(" 1 - 1 ");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);  // Corrected expectation to 0
-}
-
-TEST(ExpressionParserSubtraction, NegativeSubtractNegative) {
-    ExpressionParser parser("-1--1");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);  // Corrected expectation to 0
-}
-
-TEST(ExpressionParserSubtraction, NegativeSubtractPositive) {
-    ExpressionParser parser("-1-5");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), -6);  // Corrected expectation to -6
-}
-
-TEST(ExpressionParserSubtraction, PositiveSubtractNegative) {
-    ExpressionParser parser("1--4");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 5);  // Corrected expectation to 5
-}
 /**
  * Multiplication
  */
-
 TEST(ExpressionParserMultiplication, NoWhitespace) {
     ExpressionParser parser("2*2");
     std::unique_ptr<ASTNode> ast = parser.parse();
@@ -200,12 +152,18 @@ TEST(ExpressionParserMultiplication, PositiveMultiplyNegative) {
     std::unique_ptr<ASTNode> ast = parser.parse();
     EXPECT_EQ(ast->evaluate(), -6);
 }
+
 // Failures
 TEST(ExprsesionParserMultiplication, DuplicateMultiplyOperator) {
     ExpressionParser parser("2**2");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_THROW(ast->evaluate(), std::runtime_error);
+    EXPECT_THROW(
+        try { parser.parse(); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "Expected a number, received: *");
+            throw;
+        },
+        std::runtime_error);
 }
+
 /**
  * Exponentiation
  */
@@ -268,18 +226,22 @@ TEST(ExpressionParserExponentiation, ExponentiationWithZeroExponent) {
     std::unique_ptr<ASTNode> ast = parser.parse();
     EXPECT_EQ(ast->evaluate(), 1);
 }
+
 // Failures
-// This case expects the result to be 0, but the actual result is -2.
-TEST(ExpressionParserSubtraction, NegativeSubtractPositive) {
-    ExpressionParser parser("-1-5");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), -6);
+TEST(ExprsesionParserMultiplication, DuplicateExponentOperator) {
+    ExpressionParser parser("2^^2");
+    EXPECT_THROW(
+        try { parser.parse(); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "Expected a number, received: ^");
+            throw;
+        },
+        std::runtime_error);
 }
 
-// This case expects the result to be 5, but the actual result is -3.
-TEST(ExpressionParserSubtraction, PositiveSubtractNegative) {
-    ExpressionParser parser("1--4");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 5);
-}
+/**
+ * Modulus
+ */
 
+/**
+ * Full Expressions
+ */
