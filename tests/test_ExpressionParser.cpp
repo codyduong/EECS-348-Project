@@ -89,6 +89,78 @@ TEST(ExprsesionParserAdditon, DuplicateAddOperator) {
 /**
  * Subtraction
  */
+TEST(ExpressionParserSubtraction, NoWhitespace) {
+    ExpressionParser parser("1-1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 0);
+}
+
+TEST(ExpressionParserSubtraction, OperatorLeadingWhitespace) {
+    ExpressionParser parser("1 -1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 0);
+}
+
+TEST(ExpressionParserSubtraction, OperatorTrailingWhitespace) {
+    ExpressionParser parser("1- 1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 0);
+}
+
+TEST(ExpressionParserSubtraction, OperatorLeadingAndTrailingWhitespace) {
+    ExpressionParser parser("1 - 1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 0);
+}
+
+TEST(ExpressionParserSubtraction, LeadingWhitespace) {
+    ExpressionParser parser(" 1-1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 0);
+}
+
+TEST(ExpressionParserSubtraction, TrailingWhitespace) {
+    ExpressionParser parser("1-1 ");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 0);
+}
+
+TEST(ExpressionParserSubtraction, OperatorLeadingAndTrailingWhitespaceAndExpressionLeadingAndTrailingWhitespace) {
+    ExpressionParser parser(" 1 - 1 ");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 0);
+}
+
+TEST(ExpressionParserSubtraction, NegativeSubtractNegative) {
+    ExpressionParser parser("-1--1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 0);
+}
+
+TEST(ExpressionParserSubtraction, NegativeSubtractPositive) {
+    ExpressionParser parser("-1-5");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), -6);
+}
+
+TEST(ExpressionParserSubtraction, PositiveSubtractNegative) {
+    ExpressionParser parser("1--4");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 5);
+}
+
+// Failures
+TEST(ExprsesionParserMultiplication, DuplicateSubtractOperator) {
+    // We have do to it this way, because our unary operator - means it can be stacked infinitly, ie 1--1, and 1---1 are parsed to 1+1 and 1-1 respectively.
+    ExpressionParser parser("2-(-)");
+    EXPECT_THROW(
+        try { parser.parse(); } catch (const std::runtime_error& e) {
+            // Also recieve a ) instead of a -, because - will be parsed as a unary modifier
+            EXPECT_STREQ(e.what(), "Expected a number, received: )");
+            throw;
+        },
+        std::runtime_error);
+}
 
 /**
  * Multiplication
@@ -241,69 +313,6 @@ TEST(ExprsesionParserMultiplication, DuplicateExponentOperator) {
 /**
  * Modulus
  */
-
-/**
- * Subtraction
- */
-TEST(ExpressionParserSubtraction, NoWhitespace) {
-    ExpressionParser parser("1-1");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);
-}
-
-TEST(ExpressionParserSubtraction, OperatorLeadingWhitespace) {
-    ExpressionParser parser("1 -1");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);
-}
-
-TEST(ExpressionParserSubtraction, OperatorTrailingWhitespace) {
-    ExpressionParser parser("1- 1");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);
-}
-
-TEST(ExpressionParserSubtraction, OperatorLeadingAndTrailingWhitespace) {
-    ExpressionParser parser("1 - 1");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);
-}
-
-TEST(ExpressionParserSubtraction, LeadingWhitespace) {
-    ExpressionParser parser(" 1-1");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);
-}
-
-TEST(ExpressionParserSubtraction, TrailingWhitespace) {
-    ExpressionParser parser("1-1 ");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);
-}
-
-TEST(ExpressionParserSubtraction, OperatorLeadingAndTrailingWhitespaceAndExpressionLeadingAndTrailingWhitespace) {
-    ExpressionParser parser(" 1 - 1 ");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);
-}
-
-TEST(ExpressionParserSubtraction, NegativeSubtractNegative) {
-    ExpressionParser parser("-1--1");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 0);
-}
-
-TEST(ExpressionParserSubtraction, NegativeSubtractPositive) {
-    ExpressionParser parser("-1-5");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), -6);
-}
-
-TEST(ExpressionParserSubtraction, PositiveSubtractNegative) {
-    ExpressionParser parser("1--4");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), 5);
-}
 
 /**
  * Full Expressions
