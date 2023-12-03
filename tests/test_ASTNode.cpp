@@ -58,6 +58,47 @@ TEST(BinaryOperationNodeAddition, AdditionToString) {
 }
 
 // Test BinaryOperationNode Subtraction
+TEST(BinaryOperationNodeSubtraction, SubtractionEvaluate) {
+    NumberNode left(20.0);
+    NumberNode right(22.0);
+    BinaryOperationNode node('-', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 42.0);
+}
+
+TEST(BinaryOperationNodeSubtraction, SubtractionEvaluateDecimal) {
+    NumberNode left(5.5);
+    NumberNode right(7.33);
+    BinaryOperationNode node('-', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 12.83);
+}
+
+TEST(BinaryOperationNodeSubtraction, SubtractionNegative1) {
+    NumberNode left(20.0);
+    NumberNode right(-22.0);
+    BinaryOperationNode node('-', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), -2);
+}
+
+TEST(BinaryOperationNodeSubtraction, SubtractionNegative2) {
+    NumberNode left(-20.0);
+    NumberNode right(22.0);
+    BinaryOperationNode node('-', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 2);
+}
+
+TEST(BinaryOperationNodeSubtraction, SubtractionNegative3) {
+    NumberNode left(-20.0);
+    NumberNode right(-22.0);
+    BinaryOperationNode node('-', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), -42);
+}
+
+TEST(BinaryOperationNodeSubtraction, SubtractionToString) {
+    NumberNode left(20.0);
+    NumberNode right(22.0);
+    BinaryOperationNode node('-', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_EQ(node.toString(), "(20.000000 + 22.000000)");
+}
 
 // Test BinaryOperationNode Multiplication
 TEST(BinaryOperationNodeMultiplication, MultiplicationEvaluate) {
