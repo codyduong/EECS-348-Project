@@ -12,7 +12,7 @@ TEST(ExpressionParserSpecial, UnaryNegative) {
     EXPECT_EQ(ast->evaluate(), -1);
 }
 
-/**
+/*
  * Addition
  */
 TEST(ExpressionParserAddition, NoWhitespace) {
@@ -80,7 +80,7 @@ TEST(ExprsesionParserAdditon, DuplicateAddOperator) {
     ExpressionParser parser("1++1");
     EXPECT_THROW(
         try { parser.parse(); } catch (const std::runtime_error& e) {
-            EXPECT_STREQ(e.what(), "Expected a number, received: +");
+            EXPECT_STREQ(e.what(), "Expected a expression or number, received: +");
             throw;
         },
         std::runtime_error);
@@ -156,7 +156,7 @@ TEST(ExprsesionParserMultiplication, DuplicateSubtractOperator) {
     EXPECT_THROW(
         try { parser.parse(); } catch (const std::runtime_error& e) {
             // Also recieve a ) instead of a -, because - will be parsed as a unary modifier
-            EXPECT_STREQ(e.what(), "Expected a number, received: )");
+            EXPECT_STREQ(e.what(), "Expected a expression or number, received: )");
             throw;
         },
         std::runtime_error);
@@ -230,7 +230,7 @@ TEST(ExprsesionParserMultiplication, DuplicateMultiplyOperator) {
     ExpressionParser parser("2**2");
     EXPECT_THROW(
         try { parser.parse(); } catch (const std::runtime_error& e) {
-            EXPECT_STREQ(e.what(), "Expected a number, received: *");
+            EXPECT_STREQ(e.what(), "Expected a expression or number, received: *");
             throw;
         },
         std::runtime_error);
@@ -304,7 +304,7 @@ TEST(ExprsesionParserMultiplication, DuplicateExponentOperator) {
     ExpressionParser parser("2^^2");
     EXPECT_THROW(
         try { parser.parse(); } catch (const std::runtime_error& e) {
-            EXPECT_STREQ(e.what(), "Expected a number, received: ^");
+            EXPECT_STREQ(e.what(), "Expected a expression or number, received: ^");
             throw;
         },
         std::runtime_error);
@@ -387,6 +387,164 @@ TEST(ExpressionParserModulus, DivisionByZero) {
     std::runtime_error);
 }
 
-/**
+/*
  * Full Expressions
  */
+TEST(ExpressionParserFullExpression, MultiplicationPrecedence) {
+    ExpressionParser parser("2 + 3 * 4 - 1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 13);
+}
+
+TEST(ExpressionParserFullExpression, TwoParenthesisPrecedence) {
+    ExpressionParser parser("(2 + 3) * (4 - 1)");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 15);
+}
+
+TEST(ExpressionParserFullExpression, OneParenthesisPrecedence) {
+    ExpressionParser parser("(2 + 3) * 4 - 1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 19);
+}
+
+TEST(ExpressionParserFullExpression, ExponentialPrecedence) {
+    ExpressionParser parser("2 + 2 ^ 2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 6);
+}
+
+TEST(ExpressionParserFullExpression, ExponentialParenthesis) {
+    ExpressionParser parser("(2 + 2) ^ 2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 16);
+}
+
+TEST(ExpressionParserFullExpression, ParenthesisExponentialPrecedence) {
+    ExpressionParser parser("1 + 2 * (2 + 3)^2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 51);
+}
+
+TEST(ExpressionParserFullExpression, ExponentialPrecedenceOverAdd) {
+    ExpressionParser parser("( 2 + 3) ^ 2 + 1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 26);
+}
+
+TEST(ExpressionParserFullExpression, ParenthesisPrecedenceOverExponential) {
+    ExpressionParser parser("( 2 + 3) ^ (2 + 1)");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 125);
+}
+
+TEST(ExpressionParserFullExpression, LargeExpression) {
+    ExpressionParser parser("3 + 2 - 1 / 2 * 4 ^ 2 + 1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), -2);
+}
+
+TEST(ExpressionParserFullExpression, LargeExpressionParenthesis) {
+    ExpressionParser parser("3 *( 1 + 2) - (( 4 + 4) * 3) / 2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), -3);
+}
+
+TEST(ExpressionParserFullExpression, NegativeExponent) {
+    ExpressionParser parser("2^ -2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 0.25);
+}
+
+TEST(ExpressionParserFullExpression, ModPrecedence) {
+    ExpressionParser parser("1 + 3 % 2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 2);
+}
+
+TEST(ExpressionParserFullExpression, ModPrecedenceParenthesis) {
+    ExpressionParser parser("(1 + 3) % 2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 0);
+}
+
+// Failures
+TEST(ExpressionParserFullExpression, EnclosedEmptyParenthesisAfter) {
+    ExpressionParser parser("(1 + 1 ())");
+    EXPECT_THROW(
+        try { parser.parse(); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "Expected closing parenthesis, received: (");
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST(ExpressionParserFullExpression, EmptyParenthesisAfter) {
+    ExpressionParser parser("1 + 1 ()");
+    EXPECT_THROW(
+        try { parser.parse(); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "Expected an operator, received: (");
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST(ExpressionParserFullExpression, EnclosedEmptyParenthesisBefore) {
+    ExpressionParser parser("(() 2 - 1)");
+    EXPECT_THROW(
+        try { parser.parse(); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "Empty parenthesis");
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST(ExpressionParserFullExpression, EmptyParenthesisBefore) {
+    ExpressionParser parser("() 2 - 1");
+    EXPECT_THROW(
+        try { parser.parse(); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "Empty parenthesis");
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST(ExpressionParserFullExpression, MismatchedParenthesisBefore) {
+    ExpressionParser parser("(1 + 1");
+    EXPECT_THROW(
+        try { parser.parse(); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "Expected closing parenthesis, received: \\0 (end of expression)");
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST(ExpressionParserFullExpression, MismatchedParenthesisBeforeSpaced) {
+    ExpressionParser parser("(1 + 1");
+    EXPECT_THROW(
+        try { parser.parse(); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "Expected closing parenthesis, received: \\0 (end of expression)");
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST(ExpressionParserFullExpression, MismatchedParenthesisAfter) {
+    ExpressionParser parser("1 + 1)");
+    EXPECT_THROW(
+        try { parser.parse(); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "Missing opening parenthesis");
+            throw;
+        },
+        std::runtime_error);
+}
+
+TEST(ExpressionParserFullExpression, MismatchedParenthesisAfterSpaced) {
+    ExpressionParser parser("1 + 1 )");
+    EXPECT_THROW(
+        try { parser.parse(); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "Missing opening parenthesis");
+            throw;
+        },
+        std::runtime_error);
+}

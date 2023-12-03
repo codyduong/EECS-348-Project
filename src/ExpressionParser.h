@@ -9,8 +9,11 @@ class ExpressionParser {
    private:
     const std::string expression;
     size_t pos;
+    // manually count parenthesis
+    int leftParenthesis;
     char getNextToken();
     std::unique_ptr<ASTNode> parseNumber();
+    std::unique_ptr<ASTNode> parseExponentiation();
     std::unique_ptr<ASTNode> parseTerm();
     std::unique_ptr<ASTNode> parseFactor();
     std::unique_ptr<ASTNode> parseExpression();
