@@ -268,4 +268,18 @@ TEST(ExpressionParserExponentiation, ExponentiationWithZeroExponent) {
     std::unique_ptr<ASTNode> ast = parser.parse();
     EXPECT_EQ(ast->evaluate(), 1);
 }
+// Failures
+// This case expects the result to be 0, but the actual result is -2.
+TEST(ExpressionParserSubtraction, NegativeSubtractPositive) {
+    ExpressionParser parser("-1-5");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), -6);
+}
+
+// This case expects the result to be 5, but the actual result is -3.
+TEST(ExpressionParserSubtraction, PositiveSubtractNegative) {
+    ExpressionParser parser("1--4");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 5);
+}
 
