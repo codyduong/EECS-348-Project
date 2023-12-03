@@ -264,6 +264,10 @@ TEST(BinaryOperationNodeModulo, ModuloDivisionByZero) {
     NumberNode left(10.0);
     NumberNode right(0.0);
     BinaryOperationNode node('%', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
-    EXPECT_THROW(node.evaluate(), std::runtime_error);
+    EXPECT_THROW(
+        try { node.evaluate(); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "Modulus by zero");
+            throw;
+        },
+        std::runtime_error);
 }
-
