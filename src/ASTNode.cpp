@@ -1,10 +1,11 @@
 // ASTNode.cpp
 #include "ASTNode.h"
 
+#include <stdlib.h>
+
 #include <cmath>
 
-BinaryOperationNode::BinaryOperationNode(char op, std::unique_ptr<ASTNode> left,
-                                         std::unique_ptr<ASTNode> right)
+BinaryOperationNode::BinaryOperationNode(char op, std::unique_ptr<ASTNode> left, std::unique_ptr<ASTNode> right)
     : op(op), left(std::move(left)), right(std::move(right)) {}
 
 double BinaryOperationNode::evaluate() const {
@@ -25,7 +26,18 @@ double BinaryOperationNode::evaluate() const {
             }
         case '%':
             if (rightVal != 0.0) {
-                return std::fmod(leftVal, rightVal);
+                double result = std::fmod(leftVal, rightVal);
+
+                // Always make modulus be positive, makes writing test cases easier, inline with math definition
+                // View on wikipedia: https://en.wikipedia.org/wiki/Modulo#Variants_of_the_definition
+                //  > This still leaves a sign ambiguity if the remainder is non-zero: two possible choices for the
+                //  remainder occur, one negative and the other positive, and two possible choices for the quotient
+                //  occur.
+                //  > In number theory, the positive remainder is always chosen...
+                if (result < 0) {
+                    result += std::abs(rightVal);
+                }
+                return result;
             } else {
                 throw std::runtime_error("Modulus by zero");
             }

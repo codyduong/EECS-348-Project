@@ -313,6 +313,79 @@ TEST(ExprsesionParserMultiplication, DuplicateExponentOperator) {
 /**
  * Modulus
  */
+TEST(ExpressionParserModulus, NoWhitespace) {
+    ExpressionParser parser("7%3");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 1);
+}
+
+TEST(ExpressionParserModulus, OperatorLeadingWhitespace) {
+    ExpressionParser parser("7 %3");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 1);
+}
+
+TEST(ExpressionParserModulus, OperatorTrailingWhitespace) {
+    ExpressionParser parser("7% 3");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 1);
+}
+
+TEST(ExpressionParserModulus, OperatorLeadingAndTrailingWhitespace) {
+    ExpressionParser parser("7 % 3");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 1);
+}
+
+TEST(ExpressionParserModulus, LeadingWhitespace) {
+    ExpressionParser parser(" 7%3");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 1);
+}
+
+TEST(ExpressionParserModulus, TrailingWhitespace) {
+    ExpressionParser parser("7%3 ");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 1);
+}
+
+TEST(ExpressionParserModulus, OperatorLeadingAndTrailingWhitespaceAndExpressionLeadingAndTrailingWhitespace) {
+    ExpressionParser parser(" 7 % 3 ");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 1);
+}
+
+TEST(ExpressionParserModulus, NegativeModulusPositive) {
+    ExpressionParser parser("-7%3");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->toString(), "((-1.000000 * 7.000000) % 3.000000)");
+    EXPECT_EQ(ast->evaluate(), 2);
+}
+
+TEST(ExpressionParserModulus, PositiveModulusNegative) {
+    ExpressionParser parser("7%-3");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 1);
+}
+
+TEST(ExpressionParserModulus, NegativeModulusNegative) {
+    ExpressionParser parser("-7%-3");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->toString(), "((-1.000000 * 7.000000) % (-1.000000 * 3.000000))");
+    EXPECT_EQ(ast->evaluate(), 2);
+}
+
+// Failure Case
+TEST(ExpressionParserModulus, DivisionByZero) {
+    ExpressionParser parser("10%0");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_THROW(
+    try { ast->evaluate(); } catch (const std::runtime_error& e) {
+        EXPECT_STREQ(e.what(), "Modulus by zero");
+        throw;
+    },
+    std::runtime_error);
+}
 
 /**
  * Full Expressions
