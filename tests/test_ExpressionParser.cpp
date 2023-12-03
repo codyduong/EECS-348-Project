@@ -12,7 +12,7 @@ TEST(ExpressionParserSpecial, UnaryNegative) {
     EXPECT_EQ(ast->evaluate(), -1);
 }
 
-/**
+/*
  * Addition
  */
 TEST(ExpressionParserAddition, NoWhitespace) {
@@ -387,6 +387,108 @@ TEST(ExpressionParserModulus, DivisionByZero) {
     std::runtime_error);
 }
 
-/**
+/*
  * Full Expressions
  */
+TEST(ExpressionParserFullExpression, MultiplicationPrecedence) {
+    ExpressionParser parser("2 + 3 * 4 - 1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 13);
+}
+
+TEST(ExpressionParserFullExpression, TwoParenthesisPrecedence) {
+    ExpressionParser parser("(2 + 3) * (4 - 1)");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 15);
+}
+
+TEST(ExpressionParserFullExpression, OneParenthesisPrecedence) {
+    ExpressionParser parser("(2 + 3) * 4 - 1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 19);
+}
+
+TEST(ExpressionParserFullExpression, ExponentialPrecedence) {
+    ExpressionParser parser("2 + 2 ^ 2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 6);
+}
+
+TEST(ExpressionParserFullExpression, ExponentialParenthesis) {
+    ExpressionParser parser("(2 + 2) ^ 2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 16);
+}
+
+TEST(ExpressionParserFullExpression, ParenthesisExponentialPrecedence) {
+    ExpressionParser parser("1 + 2 * (2 + 3)^2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 51);
+}
+
+TEST(ExpressionParserFullExpression, ExponentialPrecedenceOverAdd) {
+    ExpressionParser parser("( 2 + 3) ^ 2 + 1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 26);
+}
+
+TEST(ExpressionParserFullExpression, ParenthesisPrecedenceOverExponential) {
+    ExpressionParser parser("( 2 + 3) ^ (2 + 1)");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 125);
+}
+
+TEST(ExpressionParserFullExpression, LargeExpression) {
+    ExpressionParser parser("3 + 2 - 1 / 2 * 4 ^ 2 + 1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), -2);
+}
+
+TEST(ExpressionParserFullExpression, LargeExpressionParenthesis) {
+    ExpressionParser parser("3 *( 1 + 2) - (( 4 + 4) * 3) / 2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), -3);
+}
+
+TEST(ExpressionParserFullExpression, NegativeExponent) {
+    ExpressionParser parser("2^ -2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 0.25);
+}
+
+TEST(ExpressionParserFullExpression, ModPrecedence) {
+    ExpressionParser parser("1 + 3 % 2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 2);
+}
+
+TEST(ExpressionParserFullExpression, ModPrecedenceParenthesis) {
+    ExpressionParser parser("(1 + 3) % 2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 0);
+}
+
+// Failures
+TEST(ExpressionParserFullExpression, EnclosedEmptyParenthesisAfter) {
+    ExpressionParser parser("(1 + 1 ())");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_THROW(ast->evaluate(), std::runtime_error);
+}
+
+TEST(ExpressionParserFullExpression, EmptyParenthesisAfter) {
+    ExpressionParser parser("1 + 1 ()");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_THROW(ast->evaluate(), std::runtime_error);
+}
+
+TEST(ExpressionParserFullExpression, EnclosedEmptyParenthesisBefore) {
+    ExpressionParser parser("(() 2 - 1)");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_THROW(ast->evaluate(), std::runtime_error);
+}
+
+TEST(ExpressionParserFullExpression, EmptyParenthesisBefore) {
+    ExpressionParser parser("() 2 - 1");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_THROW(ast->evaluate(), std::runtime_error);
+}

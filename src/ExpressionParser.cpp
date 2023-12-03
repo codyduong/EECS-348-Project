@@ -31,7 +31,7 @@ std::unique_ptr<ASTNode> ExpressionParser::parseNumber() {
         return std::make_unique<NumberNode>(std::stod(numStr));
     } catch (const std::invalid_argument& e) {
         // Catch the invalid argument here
-        throw std::runtime_error("Expected a number, received: " + numStr);
+        throw std::runtime_error("Expected a expression or number, received: " + numStr);
     }
 }
 
@@ -39,6 +39,11 @@ std::unique_ptr<ASTNode> ExpressionParser::parseFactor() {
     char currentToken = getNextToken();
 
     if (currentToken == '(') {
+        if (getNextToken() == ')') {
+            throw std::runtime_error("Empty parenthesis");
+        }
+        // decrement after getting nextToken
+        pos--;
         auto expressionInsideParentheses = parseExpression();
         if (getNextToken() != ')') {
             throw std::runtime_error("Missing closing parenthesis");
@@ -55,15 +60,29 @@ std::unique_ptr<ASTNode> ExpressionParser::parseFactor() {
     }
 }
 
-std::unique_ptr<ASTNode> ExpressionParser::parseTerm() {
+std::unique_ptr<ASTNode> ExpressionParser::parseExponentiation() {
     auto left = parseFactor();
     while (true) {
         char op = getNextToken();
-        if (op != '*' && op != '/' && op != '%' && op != '^') {
+        if (op != '^') {
             pos--;  // Put back the token if it's not one of the recognized operators
             break;
         }
         auto right = parseFactor();
+        left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
+    }
+    return left;
+}
+
+std::unique_ptr<ASTNode> ExpressionParser::parseTerm() {
+    auto left = parseExponentiation();
+    while (true) {
+        char op = getNextToken();
+        if (op != '*' && op != '/' && op != '%') {
+            pos--;  // Put back the token if it's not one of the recognized operators
+            break;
+        }
+        auto right = parseExponentiation();
         left = std::make_unique<BinaryOperationNode>(op, std::move(left), std::move(right));
     }
     return left;
