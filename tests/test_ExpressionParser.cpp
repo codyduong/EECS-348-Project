@@ -378,7 +378,12 @@ TEST(ExpressionParserModulus, NegativeModulusNegative) {
 TEST(ExpressionParserModulus, DivisionByZero) {
     ExpressionParser parser("10%0");
     std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_THROW(ast->evaluate(), std::runtime_error);
+    EXPECT_THROW(
+    try { ast->evaluate(); } catch (const std::runtime_error& e) {
+        EXPECT_STREQ(e.what(), "Modulus by zero");
+        throw;
+    },
+    std::runtime_error);
 }
 
 /**
