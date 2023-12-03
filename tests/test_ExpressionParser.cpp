@@ -94,6 +94,77 @@ TEST(ExprsesionParserAdditon, DuplicateAddOperator) {
  * Multiplication
  */
 
+TEST(ExpressionParserMultiplication, NoWhitespace) {
+    ExpressionParser parser("2*2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 4);
+}
+
+TEST(ExpressionParserMultiplication, OperatorLeadingWhitespace) {
+    ExpressionParser parser("2 *2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 4);
+}
+
+TEST(ExpressionParserMultiplication, OperatorTrailingWhitespace) {
+    ExpressionParser parser("2* 2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 4);
+}
+
+TEST(ExpressionParserMultiplication, OperatorLeadingAndTrailingWhitespace) {
+    ExpressionParser parser("2 * 2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 4);
+}
+
+TEST(ExpressionParserMultiplication, LeadingWhitespace) {
+    ExpressionParser parser(" 2*2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 4);
+}
+
+TEST(ExpressionParserMultiplication, TrailingWhitespace) {
+    ExpressionParser parser("2*2 ");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 4);
+}
+
+TEST(ExpressionParserMultiplication, OperatorLeadingAndTrailingWhitespaceAndExpressionLeadingAndTrailingWhitespace) {
+    ExpressionParser parser(" 2 * 2 ");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 4);
+}
+
+TEST(ExpressionParserMultiplication, NegativeMultiplyNegative) {
+    ExpressionParser parser("-2*-2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), 4);
+}
+
+TEST(ExpressionParserMultiplication, NegativeMultiplyPositive) {
+    ExpressionParser parser("-2*4");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), -8);
+}
+
+TEST(ExpressionParserMultiplication, PositiveMultiplyNegative) {
+    ExpressionParser parser("3*-2");
+    std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->evaluate(), -6);
+}
+
+// Failures
+TEST(ExprsesionParserMultiplication, DuplicateMultiplyOperator) {
+    ExpressionParser parser("2**2");
+    EXPECT_THROW(
+        try { parser.parse(); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "Expected a number, received: *");
+            throw;
+        },
+        std::runtime_error);
+}
+
 /**
  * Exponentiation
  */
