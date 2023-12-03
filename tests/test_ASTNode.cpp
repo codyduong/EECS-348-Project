@@ -57,7 +57,47 @@ TEST(BinaryOperationNodeAddition, AdditionToString) {
 }
 
 // Test BinaryOperationNode Subtraction
+TEST(BinaryOperationNodeSubtraction, SubtractionEvaluate) {
+    NumberNode left(20.0);
+    NumberNode right(22.0);
+    BinaryOperationNode node('-', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), -2.0);  // Corrected result
+}
 
+TEST(BinaryOperationNodeSubtraction, SubtractionEvaluateDecimal) {
+    NumberNode left(5.5);
+    NumberNode right(7.33);
+    BinaryOperationNode node('-', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), -1.83);  // Corrected result
+}
+
+TEST(BinaryOperationNodeSubtraction, SubtractionNegative1) {
+    NumberNode left(20.0);
+    NumberNode right(-22.0);
+    BinaryOperationNode node('-', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 42.0);  // Corrected result
+}
+
+TEST(BinaryOperationNodeSubtraction, SubtractionNegative2) {
+    NumberNode left(-20.0);
+    NumberNode right(22.0);
+    BinaryOperationNode node('-', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), -42.0);
+}
+
+TEST(BinaryOperationNodeSubtraction, SubtractionNegative3) {
+    NumberNode left(-20.0);
+    NumberNode right(-22.0);
+    BinaryOperationNode node('-', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 2.0);  // Corrected result
+}
+
+TEST(BinaryOperationNodeSubtraction, SubtractionToString) {
+    NumberNode left(20.0);
+    NumberNode right(22.0);
+    BinaryOperationNode node('-', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
+    EXPECT_EQ(node.toString(), "(20.000000 - 22.000000)");  // Corrected subtraction operator
+}
 
 // Test BinaryOperationNode Multiplication
 
@@ -103,8 +143,74 @@ TEST(BinaryOperationNodeMultiplication, MultiplicationToString) {
     EXPECT_EQ(node.toString(), "(6.000000 * 7.000000)");
 }
 
+// Test BinaryOperationNode Exponentiation
 
+TEST(BinaryOperationNodeExponentiation, ExponentiationEvaluate) {
+    NumberNode base(2.0);
+    NumberNode exponent(3.0);
+    BinaryOperationNode node('**', std::make_unique<NumberNode>(base), std::make_unique<NumberNode>(exponent));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 8.0);
+}
 
-// Test BinaryOperationNode Division
+TEST(BinaryOperationNodeExponentiation, ExponentiationEvaluateDecimal) {
+    NumberNode base(2.5);
+    NumberNode exponent(2.0);
+    BinaryOperationNode node('**', std::make_unique<NumberNode>(base), std::make_unique<NumberNode>(exponent));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 6.25);
+}
 
-// Test BinaryOperationNode Modulo
+TEST(BinaryOperationNodeExponentiation, ExponentiationZeroExponent) {
+    NumberNode base(5.0);
+    NumberNode exponent(0.0);
+    BinaryOperationNode node('**', std::make_unique<NumberNode>(base), std::make_unique<NumberNode>(exponent));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 1.0);
+}
+
+TEST(BinaryOperationNodeExponentiation, ExponentiationNegativeBase) {
+    NumberNode base(-2.0);
+    NumberNode exponent(2.0);
+    BinaryOperationNode node('**', std::make_unique<NumberNode>(base), std::make_unique<NumberNode>(exponent));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 4.0);
+}
+
+TEST(BinaryOperationNodeExponentiation, ExponentiationNegativeExponent) {
+    NumberNode base(3.0);
+    NumberNode exponent(-2.0);
+    BinaryOperationNode node('**', std::make_unique<NumberNode>(base), std::make_unique<NumberNode>(exponent));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 1.0 / 9.0);
+}
+
+TEST(BinaryOperationNodeExponentiation, ExponentiationDecimalBase) {
+    NumberNode base(1.5);
+    NumberNode exponent(2.0);
+    BinaryOperationNode node('**', std::make_unique<NumberNode>(base), std::make_unique<NumberNode>(exponent));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 2.25);
+}
+
+TEST(BinaryOperationNodeExponentiation, ExponentiationDecimalExponent) {
+    NumberNode base(2.0);
+    NumberNode exponent(0.5);
+    BinaryOperationNode node('**', std::make_unique<NumberNode>(base), std::make_unique<NumberNode>(exponent));
+    EXPECT_DOUBLE_EQ(node.evaluate(), std::sqrt(2.0));
+}
+
+TEST(BinaryOperationNodeExponentiation, ExponentiationZeroBase) {
+    NumberNode base(0.0);
+    NumberNode exponent(3.0);
+    BinaryOperationNode node('**', std::make_unique<NumberNode>(base), std::make_unique<NumberNode>(exponent));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 0.0);
+}
+
+TEST(BinaryOperationNodeExponentiation, ExponentiationZeroBaseZeroExponent) {
+    NumberNode base(0.0);
+    NumberNode exponent(0.0);
+    BinaryOperationNode node('**', std::make_unique<NumberNode>(base), std::make_unique<NumberNode>(exponent));
+    EXPECT_DOUBLE_EQ(node.evaluate(), 1.0);
+}
+
+TEST(BinaryOperationNodeExponentiation, ExponentiationToString) {
+    NumberNode base(2.0);
+    NumberNode exponent(3.0);
+    BinaryOperationNode node('**', std::make_unique<NumberNode>(base), std::make_unique<NumberNode>(exponent));
+    EXPECT_EQ(node.toString(), "(2.000000 ** 3.000000)");
+}
