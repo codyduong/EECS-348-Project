@@ -20,8 +20,19 @@ std::unique_ptr<ASTNode> ExpressionParser::parseNumber() {
     while (pos < expression.size() && (std::isdigit(expression[pos]) || expression[pos] == '.')) {
         ++pos;
     }
+    // It is possible we have encountered an invalid character, manually increment by one if the case, to get
+    // correct expression substr, but invalid numStr. Catch it in the try catch below.
+    if (pos == startPos) {
+        ++pos;
+    }
+
     std::string numStr = expression.substr(startPos, pos - startPos);
-    return std::make_unique<NumberNode>(std::stod(numStr));
+    try {
+        return std::make_unique<NumberNode>(std::stod(numStr));
+    } catch (const std::invalid_argument& e) {
+        // Catch the invalid argument here
+        throw std::runtime_error("Expected a number, received: " + numStr);
+    }
 }
 
 std::unique_ptr<ASTNode> ExpressionParser::parseFactor() {

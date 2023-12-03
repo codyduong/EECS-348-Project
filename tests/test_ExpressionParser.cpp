@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "../src/ExpressionParser.h"
 #include "gtest/gtest.h"
 
@@ -76,8 +78,12 @@ TEST(ExpressionParserAddition, PositiveAddNegative) {
 // Failures
 TEST(ExprsesionParserAdditon, DuplicateAddOperator) {
     ExpressionParser parser("1++1");
-    std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_THROW(ast->evaluate(), std::runtime_error);
+    EXPECT_THROW(
+        try { parser.parse(); } catch (const std::runtime_error& e) {
+            EXPECT_STREQ(e.what(), "Expected a number, received: +");
+            throw;
+        },
+        std::runtime_error);
 }
 
 /**
