@@ -217,8 +217,6 @@ TEST(BinaryOperationNodeExponentiation, ExponentiationToString) {
 }
 
 // Test BinaryOperationNode Modulo
-
-// Test BinaryOperationNode Modulo
 TEST(BinaryOperationNodeModulo, ModuloEvaluate) {
     NumberNode left(10.0);
     NumberNode right(3.0);
@@ -241,17 +239,17 @@ TEST(BinaryOperationNodeModulo, ModuloNegative1) {
 }
 
 TEST(BinaryOperationNodeModulo, ModuloNegative2) {
-    NumberNode left(-10.0);
+    NumberNode left(-7.0);
     NumberNode right(3.0);
     BinaryOperationNode node('%', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
-    EXPECT_DOUBLE_EQ(node.evaluate(), -1.0);
+    EXPECT_DOUBLE_EQ(node.evaluate(), 2.0);
 }
 
 TEST(BinaryOperationNodeModulo, ModuloNegative3) {
     NumberNode left(-10.0);
     NumberNode right(-3.0);
     BinaryOperationNode node('%', std::make_unique<NumberNode>(left), std::make_unique<NumberNode>(right));
-    EXPECT_DOUBLE_EQ(node.evaluate(), -1.0);
+    EXPECT_DOUBLE_EQ(node.evaluate(), 2.0);
 }
 
 TEST(BinaryOperationNodeModulo, ModuloToString) {

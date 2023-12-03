@@ -313,7 +313,6 @@ TEST(ExprsesionParserMultiplication, DuplicateExponentOperator) {
 /**
  * Modulus
  */
-
 TEST(ExpressionParserModulus, NoWhitespace) {
     ExpressionParser parser("7%3");
     std::unique_ptr<ASTNode> ast = parser.parse();
@@ -359,6 +358,7 @@ TEST(ExpressionParserModulus, OperatorLeadingAndTrailingWhitespaceAndExpressionL
 TEST(ExpressionParserModulus, NegativeModulusPositive) {
     ExpressionParser parser("-7%3");
     std::unique_ptr<ASTNode> ast = parser.parse();
+    EXPECT_EQ(ast->toString(), "((-1.000000 * 7.000000) % 3.000000)");
     EXPECT_EQ(ast->evaluate(), 2);
 }
 
@@ -371,7 +371,8 @@ TEST(ExpressionParserModulus, PositiveModulusNegative) {
 TEST(ExpressionParserModulus, NegativeModulusNegative) {
     ExpressionParser parser("-7%-3");
     std::unique_ptr<ASTNode> ast = parser.parse();
-    EXPECT_EQ(ast->evaluate(), -1);
+    EXPECT_EQ(ast->toString(), "((-1.000000 * 7.000000) % (-1.000000 * 3.000000))");
+    EXPECT_EQ(ast->evaluate(), 2);
 }
 
 // Failure Case
