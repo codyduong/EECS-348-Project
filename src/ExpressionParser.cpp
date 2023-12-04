@@ -32,7 +32,7 @@ std::unique_ptr<ASTNode> ExpressionParser::parseNumber() {
         return std::make_unique<NumberNode>(std::stod(numStr));
     } catch (const std::invalid_argument& e) {
         // Catch the invalid argument here
-        throw std::runtime_error("Expected a expression or number, received: " + numStr);
+        throw std::runtime_error("Expected an expression or number, received: " + numStr);
     }
 }
 
@@ -42,7 +42,7 @@ std::unique_ptr<ASTNode> ExpressionParser::parseFactor() {
     if (currentToken == '(') {
         leftParenthesis++;
         if (getNextToken() == ')') {
-            throw std::runtime_error("Empty parenthesis");
+            throw std::runtime_error("Empty parentheses");
         }
         pos--;  // restore the old position
         auto expressionInsideParentheses = parseExpression();

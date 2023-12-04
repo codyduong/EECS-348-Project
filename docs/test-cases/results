@@ -1,0 +1,279 @@
+Version 1.0.0
+[==========] Running 114 tests from 15 test suites.
+[----------] Global test environment set-up.
+[----------] 2 tests from NumberNodeTest
+[ RUN      ] NumberNodeTest.Evaluate
+[       OK ] NumberNodeTest.Evaluate (0 ms)
+[ RUN      ] NumberNodeTest.ToString
+[       OK ] NumberNodeTest.ToString (0 ms)
+[----------] 2 tests from NumberNodeTest (0 ms total)
+
+[----------] 6 tests from BinaryOperationNodeAddition
+[ RUN      ] BinaryOperationNodeAddition.AdditionEvaluate
+[       OK ] BinaryOperationNodeAddition.AdditionEvaluate (0 ms)
+[ RUN      ] BinaryOperationNodeAddition.AdditionEvaluateDecimal
+[       OK ] BinaryOperationNodeAddition.AdditionEvaluateDecimal (0 ms)
+[ RUN      ] BinaryOperationNodeAddition.AdditionNegative1
+[       OK ] BinaryOperationNodeAddition.AdditionNegative1 (0 ms)
+[ RUN      ] BinaryOperationNodeAddition.AdditionNegative2
+[       OK ] BinaryOperationNodeAddition.AdditionNegative2 (0 ms)
+[ RUN      ] BinaryOperationNodeAddition.AdditionNegative3
+[       OK ] BinaryOperationNodeAddition.AdditionNegative3 (0 ms)
+[ RUN      ] BinaryOperationNodeAddition.AdditionToString
+[       OK ] BinaryOperationNodeAddition.AdditionToString (0 ms)
+[----------] 6 tests from BinaryOperationNodeAddition (0 ms total)
+
+[----------] 6 tests from BinaryOperationNodeSubtraction
+[ RUN      ] BinaryOperationNodeSubtraction.SubtractionEvaluate
+[       OK ] BinaryOperationNodeSubtraction.SubtractionEvaluate (0 ms)
+[ RUN      ] BinaryOperationNodeSubtraction.SubtractionEvaluateDecimal
+[       OK ] BinaryOperationNodeSubtraction.SubtractionEvaluateDecimal (0 ms)
+[ RUN      ] BinaryOperationNodeSubtraction.SubtractionNegative1
+[       OK ] BinaryOperationNodeSubtraction.SubtractionNegative1 (0 ms)
+[ RUN      ] BinaryOperationNodeSubtraction.SubtractionNegative2
+[       OK ] BinaryOperationNodeSubtraction.SubtractionNegative2 (0 ms)
+[ RUN      ] BinaryOperationNodeSubtraction.SubtractionNegative3
+[       OK ] BinaryOperationNodeSubtraction.SubtractionNegative3 (0 ms)
+[ RUN      ] BinaryOperationNodeSubtraction.SubtractionToString
+[       OK ] BinaryOperationNodeSubtraction.SubtractionToString (0 ms)
+[----------] 6 tests from BinaryOperationNodeSubtraction (0 ms total)
+
+[----------] 6 tests from BinaryOperationNodeMultiplication
+[ RUN      ] BinaryOperationNodeMultiplication.MultiplicationEvaluate
+[       OK ] BinaryOperationNodeMultiplication.MultiplicationEvaluate (0 ms)
+[ RUN      ] BinaryOperationNodeMultiplication.MultiplicationEvaluateDecimal
+[       OK ] BinaryOperationNodeMultiplication.MultiplicationEvaluateDecimal (0 ms)
+[ RUN      ] BinaryOperationNodeMultiplication.MultiplicationNegative1
+[       OK ] BinaryOperationNodeMultiplication.MultiplicationNegative1 (0 ms)
+[ RUN      ] BinaryOperationNodeMultiplication.MultiplicationNegative2
+[       OK ] BinaryOperationNodeMultiplication.MultiplicationNegative2 (0 ms)
+[ RUN      ] BinaryOperationNodeMultiplication.MultiplicationNegative3
+[       OK ] BinaryOperationNodeMultiplication.MultiplicationNegative3 (0 ms)
+[ RUN      ] BinaryOperationNodeMultiplication.MultiplicationToString
+[       OK ] BinaryOperationNodeMultiplication.MultiplicationToString (0 ms)
+[----------] 6 tests from BinaryOperationNodeMultiplication (0 ms total)
+
+[----------] 10 tests from BinaryOperationNodeExponentiation
+[ RUN      ] BinaryOperationNodeExponentiation.ExponentiationEvaluate
+[       OK ] BinaryOperationNodeExponentiation.ExponentiationEvaluate (0 ms)
+[ RUN      ] BinaryOperationNodeExponentiation.ExponentiationEvaluateDecimal
+[       OK ] BinaryOperationNodeExponentiation.ExponentiationEvaluateDecimal (0 ms)
+[ RUN      ] BinaryOperationNodeExponentiation.ExponentiationZeroExponent
+[       OK ] BinaryOperationNodeExponentiation.ExponentiationZeroExponent (0 ms)
+[ RUN      ] BinaryOperationNodeExponentiation.ExponentiationNegativeBase
+[       OK ] BinaryOperationNodeExponentiation.ExponentiationNegativeBase (0 ms)
+[ RUN      ] BinaryOperationNodeExponentiation.ExponentiationNegativeExponent
+[       OK ] BinaryOperationNodeExponentiation.ExponentiationNegativeExponent (0 ms)
+[ RUN      ] BinaryOperationNodeExponentiation.ExponentiationDecimalBase
+[       OK ] BinaryOperationNodeExponentiation.ExponentiationDecimalBase (0 ms)
+[ RUN      ] BinaryOperationNodeExponentiation.ExponentiationDecimalExponent
+[       OK ] BinaryOperationNodeExponentiation.ExponentiationDecimalExponent (0 ms)
+[ RUN      ] BinaryOperationNodeExponentiation.ExponentiationZeroBase
+[       OK ] BinaryOperationNodeExponentiation.ExponentiationZeroBase (0 ms)
+[ RUN      ] BinaryOperationNodeExponentiation.ExponentiationZeroBaseZeroExponent
+[       OK ] BinaryOperationNodeExponentiation.ExponentiationZeroBaseZeroExponent (0 ms)
+[ RUN      ] BinaryOperationNodeExponentiation.ExponentiationToString
+[       OK ] BinaryOperationNodeExponentiation.ExponentiationToString (0 ms)
+[----------] 10 tests from BinaryOperationNodeExponentiation (0 ms total)
+
+[----------] 7 tests from BinaryOperationNodeModulo
+[ RUN      ] BinaryOperationNodeModulo.ModuloEvaluate
+[       OK ] BinaryOperationNodeModulo.ModuloEvaluate (0 ms)
+[ RUN      ] BinaryOperationNodeModulo.ModuloEvaluateDecimal
+[       OK ] BinaryOperationNodeModulo.ModuloEvaluateDecimal (0 ms)
+[ RUN      ] BinaryOperationNodeModulo.ModuloNegative1
+[       OK ] BinaryOperationNodeModulo.ModuloNegative1 (0 ms)
+[ RUN      ] BinaryOperationNodeModulo.ModuloNegative2
+[       OK ] BinaryOperationNodeModulo.ModuloNegative2 (0 ms)
+[ RUN      ] BinaryOperationNodeModulo.ModuloNegative3
+[       OK ] BinaryOperationNodeModulo.ModuloNegative3 (0 ms)
+[ RUN      ] BinaryOperationNodeModulo.ModuloToString
+[       OK ] BinaryOperationNodeModulo.ModuloToString (0 ms)
+[ RUN      ] BinaryOperationNodeModulo.ModuloDivisionByZero
+[       OK ] BinaryOperationNodeModulo.ModuloDivisionByZero (1 ms)
+[----------] 7 tests from BinaryOperationNodeModulo (1 ms total)
+
+[----------] 1 test from ExpressionParserSpecial
+[ RUN      ] ExpressionParserSpecial.UnaryNegative
+[       OK ] ExpressionParserSpecial.UnaryNegative (0 ms)
+[----------] 1 test from ExpressionParserSpecial (0 ms total)
+
+[----------] 10 tests from ExpressionParserAddition
+[ RUN      ] ExpressionParserAddition.NoWhitespace
+[       OK ] ExpressionParserAddition.NoWhitespace (0 ms)
+[ RUN      ] ExpressionParserAddition.OperatorLeadingWhitespace
+[       OK ] ExpressionParserAddition.OperatorLeadingWhitespace (0 ms)
+[ RUN      ] ExpressionParserAddition.OperatorTrailingWhitespace
+[       OK ] ExpressionParserAddition.OperatorTrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserAddition.OperatorLeadingAndTrailingWhitespace
+[       OK ] ExpressionParserAddition.OperatorLeadingAndTrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserAddition.LeadingWhitespace
+[       OK ] ExpressionParserAddition.LeadingWhitespace (0 ms)
+[ RUN      ] ExpressionParserAddition.TrailingWhitespace
+[       OK ] ExpressionParserAddition.TrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserAddition.OperatorLeadingAndTrailingWhitespaceAndExpressionLeadingAndTrailingWhitespace
+[       OK ] ExpressionParserAddition.OperatorLeadingAndTrailingWhitespaceAndExpressionLeadingAndTrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserAddition.NegativeAddNegative
+[       OK ] ExpressionParserAddition.NegativeAddNegative (0 ms)
+[ RUN      ] ExpressionParserAddition.NegativeAddPositive
+[       OK ] ExpressionParserAddition.NegativeAddPositive (0 ms)
+[ RUN      ] ExpressionParserAddition.PositiveAddNegative
+[       OK ] ExpressionParserAddition.PositiveAddNegative (0 ms)
+[----------] 10 tests from ExpressionParserAddition (0 ms total)
+
+[----------] 1 test from ExprsesionParserAddition
+[ RUN      ] ExprsesionParserAddition.DuplicateAddOperator
+[       OK ] ExprsesionParserAddition.DuplicateAddOperator (0 ms)
+[----------] 1 test from ExprsesionParserAddition (0 ms total)
+
+[----------] 10 tests from ExpressionParserSubtraction
+[ RUN      ] ExpressionParserSubtraction.NoWhitespace
+[       OK ] ExpressionParserSubtraction.NoWhitespace (0 ms)
+[ RUN      ] ExpressionParserSubtraction.OperatorLeadingWhitespace
+[       OK ] ExpressionParserSubtraction.OperatorLeadingWhitespace (0 ms)
+[ RUN      ] ExpressionParserSubtraction.OperatorTrailingWhitespace
+[       OK ] ExpressionParserSubtraction.OperatorTrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserSubtraction.OperatorLeadingAndTrailingWhitespace
+[       OK ] ExpressionParserSubtraction.OperatorLeadingAndTrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserSubtraction.LeadingWhitespace
+[       OK ] ExpressionParserSubtraction.LeadingWhitespace (0 ms)
+[ RUN      ] ExpressionParserSubtraction.TrailingWhitespace
+[       OK ] ExpressionParserSubtraction.TrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserSubtraction.OperatorLeadingAndTrailingWhitespaceAndExpressionLeadingAndTrailingWhitespace
+[       OK ] ExpressionParserSubtraction.OperatorLeadingAndTrailingWhitespaceAndExpressionLeadingAndTrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserSubtraction.NegativeSubtractNegative
+[       OK ] ExpressionParserSubtraction.NegativeSubtractNegative (0 ms)
+[ RUN      ] ExpressionParserSubtraction.NegativeSubtractPositive
+[       OK ] ExpressionParserSubtraction.NegativeSubtractPositive (0 ms)
+[ RUN      ] ExpressionParserSubtraction.PositiveSubtractNegative
+[       OK ] ExpressionParserSubtraction.PositiveSubtractNegative (0 ms)
+[----------] 10 tests from ExpressionParserSubtraction (0 ms total)
+
+[----------] 3 tests from ExprsesionParserMultiplication
+[ RUN      ] ExprsesionParserMultiplication.DuplicateSubtractOperator
+[       OK ] ExprsesionParserMultiplication.DuplicateSubtractOperator (0 ms)
+[ RUN      ] ExprsesionParserMultiplication.DuplicateMultiplyOperator
+[       OK ] ExprsesionParserMultiplication.DuplicateMultiplyOperator (0 ms)
+[ RUN      ] ExprsesionParserMultiplication.DuplicateExponentOperator
+[       OK ] ExprsesionParserMultiplication.DuplicateExponentOperator (0 ms)
+[----------] 3 tests from ExprsesionParserMultiplication (0 ms total)
+
+[----------] 10 tests from ExpressionParserMultiplication
+[ RUN      ] ExpressionParserMultiplication.NoWhitespace
+[       OK ] ExpressionParserMultiplication.NoWhitespace (0 ms)
+[ RUN      ] ExpressionParserMultiplication.OperatorLeadingWhitespace
+[       OK ] ExpressionParserMultiplication.OperatorLeadingWhitespace (0 ms)
+[ RUN      ] ExpressionParserMultiplication.OperatorTrailingWhitespace
+[       OK ] ExpressionParserMultiplication.OperatorTrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserMultiplication.OperatorLeadingAndTrailingWhitespace
+[       OK ] ExpressionParserMultiplication.OperatorLeadingAndTrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserMultiplication.LeadingWhitespace
+[       OK ] ExpressionParserMultiplication.LeadingWhitespace (0 ms)
+[ RUN      ] ExpressionParserMultiplication.TrailingWhitespace
+[       OK ] ExpressionParserMultiplication.TrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserMultiplication.OperatorLeadingAndTrailingWhitespaceAndExpressionLeadingAndTrailingWhitespace
+[       OK ] ExpressionParserMultiplication.OperatorLeadingAndTrailingWhitespaceAndExpressionLeadingAndTrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserMultiplication.NegativeMultiplyNegative
+[       OK ] ExpressionParserMultiplication.NegativeMultiplyNegative (0 ms)
+[ RUN      ] ExpressionParserMultiplication.NegativeMultiplyPositive
+[       OK ] ExpressionParserMultiplication.NegativeMultiplyPositive (0 ms)
+[ RUN      ] ExpressionParserMultiplication.PositiveMultiplyNegative
+[       OK ] ExpressionParserMultiplication.PositiveMultiplyNegative (0 ms)
+[----------] 10 tests from ExpressionParserMultiplication (0 ms total)
+
+[----------] 10 tests from ExpressionParserExponentiation
+[ RUN      ] ExpressionParserExponentiation.PositiveExponentPositive
+[       OK ] ExpressionParserExponentiation.PositiveExponentPositive (0 ms)
+[ RUN      ] ExpressionParserExponentiation.NegativeBasePositiveExponent
+[       OK ] ExpressionParserExponentiation.NegativeBasePositiveExponent (0 ms)
+[ RUN      ] ExpressionParserExponentiation.PositiveBaseNegativeExponent
+[       OK ] ExpressionParserExponentiation.PositiveBaseNegativeExponent (0 ms)
+[ RUN      ] ExpressionParserExponentiation.BaseWithWhitespaceExponent
+[       OK ] ExpressionParserExponentiation.BaseWithWhitespaceExponent (0 ms)
+[ RUN      ] ExpressionParserExponentiation.ExponentiationWithMultipleOperators
+[       OK ] ExpressionParserExponentiation.ExponentiationWithMultipleOperators (0 ms)
+[ RUN      ] ExpressionParserExponentiation.ExponentiationWithParentheses
+[       OK ] ExpressionParserExponentiation.ExponentiationWithParentheses (0 ms)
+[ RUN      ] ExpressionParserExponentiation.ExponentiationWithNegativeBaseAndExponent
+[       OK ] ExpressionParserExponentiation.ExponentiationWithNegativeBaseAndExponent (0 ms)
+[ RUN      ] ExpressionParserExponentiation.ExponentiationWithNegativeBase
+[       OK ] ExpressionParserExponentiation.ExponentiationWithNegativeBase (0 ms)
+[ RUN      ] ExpressionParserExponentiation.ExponentiationWithZeroBase
+[       OK ] ExpressionParserExponentiation.ExponentiationWithZeroBase (0 ms)
+[ RUN      ] ExpressionParserExponentiation.ExponentiationWithZeroExponent
+[       OK ] ExpressionParserExponentiation.ExponentiationWithZeroExponent (0 ms)
+[----------] 10 tests from ExpressionParserExponentiation (0 ms total)
+
+[----------] 11 tests from ExpressionParserModulus
+[ RUN      ] ExpressionParserModulus.NoWhitespace
+[       OK ] ExpressionParserModulus.NoWhitespace (0 ms)
+[ RUN      ] ExpressionParserModulus.OperatorLeadingWhitespace
+[       OK ] ExpressionParserModulus.OperatorLeadingWhitespace (0 ms)
+[ RUN      ] ExpressionParserModulus.OperatorTrailingWhitespace
+[       OK ] ExpressionParserModulus.OperatorTrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserModulus.OperatorLeadingAndTrailingWhitespace
+[       OK ] ExpressionParserModulus.OperatorLeadingAndTrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserModulus.LeadingWhitespace
+[       OK ] ExpressionParserModulus.LeadingWhitespace (0 ms)
+[ RUN      ] ExpressionParserModulus.TrailingWhitespace
+[       OK ] ExpressionParserModulus.TrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserModulus.OperatorLeadingAndTrailingWhitespaceAndExpressionLeadingAndTrailingWhitespace
+[       OK ] ExpressionParserModulus.OperatorLeadingAndTrailingWhitespaceAndExpressionLeadingAndTrailingWhitespace (0 ms)
+[ RUN      ] ExpressionParserModulus.NegativeModulusPositive
+[       OK ] ExpressionParserModulus.NegativeModulusPositive (0 ms)
+[ RUN      ] ExpressionParserModulus.PositiveModulusNegative
+[       OK ] ExpressionParserModulus.PositiveModulusNegative (0 ms)
+[ RUN      ] ExpressionParserModulus.NegativeModulusNegative
+[       OK ] ExpressionParserModulus.NegativeModulusNegative (0 ms)
+[ RUN      ] ExpressionParserModulus.DivisionByZero
+[       OK ] ExpressionParserModulus.DivisionByZero (0 ms)
+[----------] 11 tests from ExpressionParserModulus (0 ms total)
+
+[----------] 21 tests from ExpressionParserFullExpression
+[ RUN      ] ExpressionParserFullExpression.MultiplicationPrecedence
+[       OK ] ExpressionParserFullExpression.MultiplicationPrecedence (0 ms)
+[ RUN      ] ExpressionParserFullExpression.TwoParenthesisPrecedence
+[       OK ] ExpressionParserFullExpression.TwoParenthesisPrecedence (0 ms)
+[ RUN      ] ExpressionParserFullExpression.OneParenthesisPrecedence
+[       OK ] ExpressionParserFullExpression.OneParenthesisPrecedence (0 ms)
+[ RUN      ] ExpressionParserFullExpression.ExponentialPrecedence
+[       OK ] ExpressionParserFullExpression.ExponentialPrecedence (0 ms)
+[ RUN      ] ExpressionParserFullExpression.ExponentialParenthesis
+[       OK ] ExpressionParserFullExpression.ExponentialParenthesis (0 ms)
+[ RUN      ] ExpressionParserFullExpression.ParenthesisExponentialPrecedence
+[       OK ] ExpressionParserFullExpression.ParenthesisExponentialPrecedence (0 ms)
+[ RUN      ] ExpressionParserFullExpression.ExponentialPrecedenceOverAdd
+[       OK ] ExpressionParserFullExpression.ExponentialPrecedenceOverAdd (0 ms)
+[ RUN      ] ExpressionParserFullExpression.ParenthesisPrecedenceOverExponential
+[       OK ] ExpressionParserFullExpression.ParenthesisPrecedenceOverExponential (0 ms)
+[ RUN      ] ExpressionParserFullExpression.LargeExpression
+[       OK ] ExpressionParserFullExpression.LargeExpression (0 ms)
+[ RUN      ] ExpressionParserFullExpression.LargeExpressionParenthesis
+[       OK ] ExpressionParserFullExpression.LargeExpressionParenthesis (0 ms)
+[ RUN      ] ExpressionParserFullExpression.NegativeExponent
+[       OK ] ExpressionParserFullExpression.NegativeExponent (0 ms)
+[ RUN      ] ExpressionParserFullExpression.ModPrecedence
+[       OK ] ExpressionParserFullExpression.ModPrecedence (0 ms)
+[ RUN      ] ExpressionParserFullExpression.ModPrecedenceParenthesis
+[       OK ] ExpressionParserFullExpression.ModPrecedenceParenthesis (0 ms)
+[ RUN      ] ExpressionParserFullExpression.EnclosedEmptyParenthesisAfter
+[       OK ] ExpressionParserFullExpression.EnclosedEmptyParenthesisAfter (0 ms)
+[ RUN      ] ExpressionParserFullExpression.EmptyParenthesisAfter
+[       OK ] ExpressionParserFullExpression.EmptyParenthesisAfter (0 ms)
+[ RUN      ] ExpressionParserFullExpression.EnclosedEmptyParenthesisBefore
+[       OK ] ExpressionParserFullExpression.EnclosedEmptyParenthesisBefore (0 ms)
+[ RUN      ] ExpressionParserFullExpression.EmptyParenthesisBefore
+[       OK ] ExpressionParserFullExpression.EmptyParenthesisBefore (0 ms)
+[ RUN      ] ExpressionParserFullExpression.MismatchedParenthesisBefore
+[       OK ] ExpressionParserFullExpression.MismatchedParenthesisBefore (1 ms)
+[ RUN      ] ExpressionParserFullExpression.MismatchedParenthesisBeforeSpaced
+[       OK ] ExpressionParserFullExpression.MismatchedParenthesisBeforeSpaced (0 ms)
+[ RUN      ] ExpressionParserFullExpression.MismatchedParenthesisAfter
+[       OK ] ExpressionParserFullExpression.MismatchedParenthesisAfter (0 ms)
+[ RUN      ] ExpressionParserFullExpression.MismatchedParenthesisAfterSpaced
+[       OK ] ExpressionParserFullExpression.MismatchedParenthesisAfterSpaced (0 ms)
+[----------] 21 tests from ExpressionParserFullExpression (2 ms total)
+
+[----------] Global test environment tear-down
+[==========] 114 tests from 15 test suites ran. (6 ms total)
+[  PASSED  ] 114 tests.
