@@ -76,11 +76,11 @@ TEST(ExpressionParserAddition, PositiveAddNegative) {
 }
 
 // Failures
-TEST(ExprsesionParserAdditon, DuplicateAddOperator) {
+TEST(ExprsesionParserAddition, DuplicateAddOperator) {
     ExpressionParser parser("1++1");
     EXPECT_THROW(
         try { parser.parse(); } catch (const std::runtime_error& e) {
-            EXPECT_STREQ(e.what(), "Expected a expression or number, received: +");
+            EXPECT_STREQ(e.what(), "Expected an expression or number, received: +");
             throw;
         },
         std::runtime_error);
@@ -156,7 +156,7 @@ TEST(ExprsesionParserMultiplication, DuplicateSubtractOperator) {
     EXPECT_THROW(
         try { parser.parse(); } catch (const std::runtime_error& e) {
             // Also recieve a ) instead of a -, because - will be parsed as a unary modifier
-            EXPECT_STREQ(e.what(), "Expected a expression or number, received: )");
+            EXPECT_STREQ(e.what(), "Expected an expression or number, received: )");
             throw;
         },
         std::runtime_error);
@@ -230,7 +230,7 @@ TEST(ExprsesionParserMultiplication, DuplicateMultiplyOperator) {
     ExpressionParser parser("2**2");
     EXPECT_THROW(
         try { parser.parse(); } catch (const std::runtime_error& e) {
-            EXPECT_STREQ(e.what(), "Expected a expression or number, received: *");
+            EXPECT_STREQ(e.what(), "Expected an expression or number, received: *");
             throw;
         },
         std::runtime_error);
@@ -304,7 +304,7 @@ TEST(ExprsesionParserMultiplication, DuplicateExponentOperator) {
     ExpressionParser parser("2^^2");
     EXPECT_THROW(
         try { parser.parse(); } catch (const std::runtime_error& e) {
-            EXPECT_STREQ(e.what(), "Expected a expression or number, received: ^");
+            EXPECT_STREQ(e.what(), "Expected an expression or number, received: ^");
             throw;
         },
         std::runtime_error);
@@ -493,7 +493,7 @@ TEST(ExpressionParserFullExpression, EnclosedEmptyParenthesisBefore) {
     ExpressionParser parser("(() 2 - 1)");
     EXPECT_THROW(
         try { parser.parse(); } catch (const std::runtime_error& e) {
-            EXPECT_STREQ(e.what(), "Empty parenthesis");
+            EXPECT_STREQ(e.what(), "Empty parentheses");
             throw;
         },
         std::runtime_error);
@@ -503,7 +503,7 @@ TEST(ExpressionParserFullExpression, EmptyParenthesisBefore) {
     ExpressionParser parser("() 2 - 1");
     EXPECT_THROW(
         try { parser.parse(); } catch (const std::runtime_error& e) {
-            EXPECT_STREQ(e.what(), "Empty parenthesis");
+            EXPECT_STREQ(e.what(), "Empty parentheses");
             throw;
         },
         std::runtime_error);
